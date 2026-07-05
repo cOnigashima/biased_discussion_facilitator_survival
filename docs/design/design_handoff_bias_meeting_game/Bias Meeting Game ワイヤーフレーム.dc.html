@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kurenaido&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#efece6;font-family:'Zen Kurenaido','Kalam',system-ui,sans-serif}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:600 14px/1.2 'Zen Kurenaido',system-ui,sans-serif;color:#1a1a1a}
+  .dv-legend{margin:0 0 24px;font:13px/1.6 'Zen Kurenaido',system-ui;color:rgba(0,0,0,.5);display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:11px;scroll-margin-top:16px}
+  .dv-oid{font:600 11px ui-monospace,Menlo,monospace;padding:3px 8px;background:rgba(0,0,0,.09);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:400 13px/1.35 'Zen Kurenaido',system-ui;color:rgba(0,0,0,.6)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-next{margin:26px 0 0;font:14px/1.7 'Zen Kurenaido',system-ui;color:rgba(0,0,0,.55)}
+  .dv-next a{color:#2a78d6}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t4">
+  <div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">会議バトル — ADVチャット型に作り直し（<a class="dv-oid" href="#1c">1c</a>/<a class="dv-oid" href="#1d">1d</a>の方向転換）</span></div>
+  <div class="dv-legend"><span>発言ログが下へリアルタイムに流れる（上下スクロール）／気になる発言箇所をクリックして選ぶ／右サイドバーは「証拠&アクション」と「議事録」を切替／Roundごとに時間制限</span></div>
+
+  <div class="dv-opts">
+
+    <!-- ===== 4a メイン ===== -->
+    <div class="dv-opt" id="4a">
+      <div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a>流れるログ + 発言クリック + 右サイドバー（証拠&アクション表示中）</div>
+      <div style="width:960px;height:660px;background:#f0eee9;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;position:relative;display:flex;flex-direction:column">
+
+        <!-- ヘッダー: Round + タイマー -->
+        <div style="display:flex;align-items:center;gap:12px;padding:9px 15px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+          <span style="font-size:14px;color:#1a1a1a">会議バトル — 決済v2 Go/No-Go</span>
+          <span style="font:12px ui-monospace,monospace;background:#1a1a1a;color:#fff;padding:2px 8px;border-radius:4px">ROUND 2 / 5</span>
+          <span style="color:#999;font-size:13px">黒瀬の主張</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:8px">
+            <span style="font:13px ui-monospace,monospace;color:#c0663a">⏱ 0:24</span>
+            <span style="width:120px;height:7px;border-radius:4px;background:#e7ddd0;overflow:hidden;border:1px solid #d8cbb6"><span style="display:block;width:48%;height:100%;background:#e0a24a"></span></span>
+          </span>
+        </div>
+
+        <div style="flex:1;display:flex;min-height:0">
+
+          <!-- ログ（スクロール） -->
+          <div style="flex:1;position:relative;overflow:hidden;background:#faf9f6">
+            <div style="position:absolute;top:0;left:0;right:0;height:26px;background:linear-gradient(#faf9f6,rgba(250,249,246,0));text-align:center;font-size:11px;color:#bbb;z-index:2;padding-top:3px">↑ これまでの発言</div>
+            <div style="position:absolute;inset:0;overflow:hidden;padding:30px 20px 16px;display:flex;flex-direction:column;gap:14px">
+
+              <!-- 佐伯 -->
+              <div style="display:flex;gap:10px">
+                <div style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999;flex:none;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">佐伯</div>
+                <div style="flex:1">
+                  <div style="font-size:12px;color:#666;margin-bottom:3px">佐伯 <span style="color:#aaa">PM · 21:41</span></div>
+                  <div style="background:#fff;border:1.3px solid #e2e0da;border-radius:10px;border-top-left-radius:3px;padding:9px 12px;font-size:14px;line-height:1.7;color:#333">ここまで来て止めるのは現実的じゃないです。<span style="background:#ffe6c2;border-radius:3px;padding:0 3px;border-bottom:2px dotted #d89a4a">前回も似た警告</span>は出ましたけど、結局問題ありませんでしたよね。</div>
+                </div>
+              </div>
+
+              <!-- あなた -->
+              <div style="display:flex;gap:10px;flex-direction:row-reverse">
+                <div style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7ddd2,#d7ddd2 3px,#e8ede2 3px,#e8ede2 6px);border:1.4px solid #5a6b52;flex:none;font-size:9px;display:flex;align-items:center;justify-content:center;color:#5a6b52">自分</div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:flex-end">
+                  <div style="font-size:12px;color:#666;margin-bottom:3px">あなた（シニアエンジニア）</div>
+                  <div style="background:#eef3fb;border:1.3px solid #cfe0f5;border-radius:10px;border-top-right-radius:3px;padding:9px 12px;font-size:14px;line-height:1.7;color:#25415f;max-width:78%">前回はlogin timeout、今回は legacy_plan=true の決済migrationで落ちています。同じ警告として扱ってよいか、差分を確認しませんか？</div>
+                </div>
+              </div>
+
+              <!-- 佐伯 返し -->
+              <div style="display:flex;gap:10px">
+                <div style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999;flex:none;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">佐伯</div>
+                <div style="flex:1">
+                  <div style="font-size:12px;color:#666;margin-bottom:3px">佐伯 <span style="color:#aaa">PM · 21:42</span></div>
+                  <div style="background:#fff;border:1.3px solid #e2e0da;border-radius:10px;border-top-left-radius:3px;padding:9px 12px;font-size:14px;line-height:1.7;color:#333">……対象が違うなら、同じとは言い切れないですね。</div>
+                </div>
+              </div>
+
+              <!-- 黒瀬（現在の発言・アクション対象） -->
+              <div style="display:flex;gap:10px">
+                <div style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#dfe8f2,#dfe8f2 3px,#eef3fb 3px,#eef3fb 6px);border:1.8px solid #2a78d6;flex:none;font-size:9px;display:flex;align-items:center;justify-content:center;color:#2a78d6">黒瀬</div>
+                <div style="flex:1">
+                  <div style="font-size:12px;color:#2a78d6;margin-bottom:3px">黒瀬 <span style="color:#7fa8d6">Tech Lead · 今</span></div>
+                  <div style="background:#fff;border:1.8px solid #2a78d6;border-radius:10px;border-top-left-radius:3px;padding:10px 13px;font-size:15px;line-height:1.85;color:#222;box-shadow:0 4px 12px rgba(42,120,214,.16)">このテストは<span style="background:#ffe08a;border-radius:3px;padding:1px 4px;border:1.5px solid #2a78d6">前から不安定</span>です。<span style="background:#ffe6c2;border-radius:3px;padding:0 3px;border-bottom:2px dotted #d89a4a">実装の問題ではない</span>、<span style="background:#ffe6c2;border-radius:3px;padding:0 3px;border-bottom:2px dotted #d89a4a">テスト側の問題</span>だと思います。</div>
+                  <div style="font-size:12px;color:#2a78d6;margin-top:5px">↑ 気になる箇所をクリックして選ぶ（選択中: 「前から不安定」）</div>
+                </div>
+              </div>
+
+              <!-- タイピングインジケータ -->
+              <div style="display:flex;gap:10px;opacity:.6">
+                <div style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999;flex:none;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">三村</div>
+                <div style="align-self:center;font-size:13px;color:#999">三村（QA）が発言しようとしている…</div>
+              </div>
+            </div>
+            <!-- スクロールバー飾り -->
+            <div style="position:absolute;top:32px;bottom:12px;right:5px;width:5px;border-radius:3px;background:rgba(0,0,0,.06)"><span style="display:block;margin-top:120px;width:5px;height:80px;border-radius:3px;background:rgba(0,0,0,.22)"></span></div>
+          </div>
+
+          <!-- 右サイドバー -->
+          <div style="width:300px;border-left:1.4px solid #1a1a1a;background:#fff;display:flex;flex-direction:column">
+            <!-- タブ -->
+            <div style="display:flex;padding:8px 8px 0;gap:6px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+              <div style="flex:1;text-align:center;font-size:13px;padding:9px 0;border:1.4px solid #1a1a1a;border-bottom:none;border-radius:8px 8px 0 0;background:#fff;color:#1a1a1a;margin-bottom:-1.4px">証拠 & アクション</div>
+              <div style="flex:1;text-align:center;font-size:13px;padding:9px 0;border:1.3px solid #ccc;border-bottom:none;border-radius:8px 8px 0 0;background:#eceae4;color:#888">議事録</div>
+            </div>
+
+            <div style="flex:1;padding:14px 13px;display:flex;flex-direction:column;gap:13px;overflow:hidden">
+              <div>
+                <div style="font-size:11px;color:#888;margin-bottom:5px">狙う発言箇所</div>
+                <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:6px 10px;border:1.4px solid #2a78d6;border-radius:8px;background:#eef3fb;color:#2a78d6">黒瀬「前から不安定」<span style="color:#7fa8d6">✕</span></div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#888;margin-bottom:6px">証拠カード</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:13px;padding:8px 10px;border:1.4px solid #2a78d6;border-radius:8px;background:#eef3fb;color:#2a78d6">CI失敗ログ ✓</span>
+                  <span style="font-size:13px;padding:8px 10px;border:1.3px solid #ccc;border-radius:8px;color:#555">staging障害ログ</span>
+                  <span style="font-size:13px;padding:8px 10px;border:1.3px solid #ccc;border-radius:8px;color:#555">PRコメント</span>
+                  <span style="font-size:13px;padding:8px 10px;border:1.3px solid #ccc;border-radius:8px;color:#555">顧客メール</span>
+                  <span style="font-size:12px;padding:7px 10px;border:1.3px dashed #bbb;border-radius:8px;color:#888">証拠なし（発言だけする）</span>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#888;margin-bottom:6px">出し方</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:13px;padding:8px 10px;border:1.4px solid #2a78d6;border-radius:8px;background:#eef3fb;color:#2a78d6">失敗条件を確認する ✓</span>
+                  <span style="font-size:13px;padding:8px 10px;border:1.3px solid #ccc;border-radius:8px;color:#555">設計でなくlegacy条件に絞る</span>
+                  <span style="font-size:13px;padding:8px 10px;border:1.3px solid #ccc;border-radius:8px;color:#555">「設計ミスですよね」と攻める</span>
+                </div>
+              </div>
+            </div>
+            <div style="padding:12px 13px;border-top:1.3px dashed rgba(0,0,0,.25)">
+              <button style="width:100%;font-family:inherit;font-size:15px;padding:11px 0;border:1.6px solid #1a1a1a;border-radius:9px;background:#ffe08a;color:#1a1a1a;box-shadow:0 3px 0 #1a1a1a">この発言をする</button>
+              <div style="font-size:11px;color:#2a78d6;text-align:center;margin-top:7px">時間切れになると、このRoundの発言は流される</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:960px">発言は下へ流れ続ける。プレイヤーの行動もログに残り、相手が反応して会話が続く。数値・ゲージ・バイアス名は非表示のまま。</div>
+    </div>
+
+    <!-- ===== 4b サイドバー: 議事録タブ ===== -->
+    <div class="dv-opt" id="4b">
+      <div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a>右サイドバーを「議事録」タブに切替（事実だけの読み取り専用ログ）</div>
+      <div style="width:300px;height:520px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;display:flex;flex-direction:column">
+        <div style="display:flex;padding:8px 8px 0;gap:6px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+          <div style="flex:1;text-align:center;font-size:13px;padding:9px 0;border:1.3px solid #ccc;border-bottom:none;border-radius:8px 8px 0 0;background:#eceae4;color:#888">証拠 & アクション</div>
+          <div style="flex:1;text-align:center;font-size:13px;padding:9px 0;border:1.4px solid #1a1a1a;border-bottom:none;border-radius:8px 8px 0 0;background:#fff;color:#1a1a1a;margin-bottom:-1.4px">議事録</div>
+        </div>
+        <div style="flex:1;padding:13px;display:flex;flex-direction:column;gap:9px;overflow:hidden">
+          <div style="border:1.2px solid #e2e0da;border-radius:7px;background:#faf9f6;padding:9px 11px;font-size:12px;line-height:1.65;color:#444">佐伯は、前回も似た警告が出て問題なかったと説明した。<div style="color:#2a78d6;font-size:11px;margin-top:3px">クリックで該当発言へ ▾</div></div>
+          <div style="border:1.2px solid #e2e0da;border-radius:7px;background:#faf9f6;padding:9px 11px;font-size:12px;line-height:1.65;color:#444">プレイヤーはCI失敗ログを示し、前回はtimeout・今回は legacy_plan=true の migration と条件差を確認した。<div style="color:#2a78d6;font-size:11px;margin-top:3px">クリックで該当発言へ ▾</div></div>
+          <div style="border:1.2px dashed rgba(0,0,0,.25);border-radius:7px;padding:9px 11px;font-size:12px;color:#aaa">…黒瀬のflaky主張への対応がここに追記される</div>
+        </div>
+        <div style="padding:11px 13px;border-top:1.3px dashed rgba(0,0,0,.25);font-size:11px;color:#2a78d6;line-height:1.5">※ 事実だけを淡々と記録。成功/失敗・誘導・バイアス名は書かない</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">次の一手の例：「これでOK、Round進行と反応の流れを詰めよう」 · 「タイマーはもっと長め／無しでも」 · 「発言クリックで右がアクションタブに自動で切り替わるように」 · 「プレイヤーの吹き出しは左寄せでもいい」</p>
+</section>
+
+<section class="dv-turn" id="t3">
+  <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">探索画面（確定案）— <a class="dv-oid" href="#2a">2a</a>のドック + <a class="dv-oid" href="#2b">2b</a>の幅広コメント帯を統合</span></div>
+  <div class="dv-legend"><span>menubar / 中央ウィンドウ（左端まで広く使える）/ 下センターにドックで資料切替 / 最下部に主人公コメント帯 + 右に会議を開始</span></div>
+
+  <div class="dv-opts">
+    <div class="dv-opt" id="3a">
+      <div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>統合レイアウト（+ 会議開始→確認ポップアップの導線）</div>
+      <div style="width:940px;height:640px;background:#dde3ec;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;position:relative;background-image:radial-gradient(circle at 28% 18%,#e9edf4,#c9d3e1)">
+
+        <!-- メニューバー -->
+        <div style="position:absolute;top:0;left:0;right:0;height:26px;background:rgba(255,255,255,.72);border-bottom:1px solid rgba(0,0,0,.12);display:flex;align-items:center;gap:14px;padding:0 12px;font-size:12px;color:#333;z-index:2">
+          <span style="font-weight:700">■</span><span>資料ビューア</span><span style="color:#888">ファイル</span><span style="color:#888">表示</span>
+          <span style="margin-left:auto;color:#555">リリース前夜 · 木 21:40</span>
+        </div>
+
+        <!-- 中央ウィンドウ（大きめ） -->
+        <div style="position:absolute;top:46px;left:66px;width:660px;background:#fff;border:1.5px solid #1a1a1a;border-radius:10px;box-shadow:0 12px 28px rgba(0,0,0,.22);overflow:hidden">
+          <div style="height:34px;display:flex;align-items:center;gap:7px;padding:0 13px;background:#f3f0ea;border-bottom:1.3px solid #ddd">
+            <span style="width:11px;height:11px;border-radius:50%;background:#e0655a;border:1px solid #b4483f"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#e8c14a;border:1px solid #c39c2c"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#7bbf6f;border:1px solid #549249"></span>
+            <span style="margin-left:8px;font-size:13px;color:#333">CI Log</span>
+            <span style="margin-left:auto;font-size:11px;color:#aaa">CheckoutV2MigrationSpec</span>
+          </div>
+          <div style="font:13px/2 ui-monospace,Menlo,monospace;color:#333;padding:16px 20px">
+            <div style="color:#999">Failed: CheckoutV2MigrationSpec &nbsp; Seed: 18433</div>
+            <div style="height:6px"></div>
+            <div style="color:#999">Case:</div>
+            <div style="background:#dff0d8;border:1px solid #b7d8ab;border-radius:4px;padding:1px 6px;display:inline-block;color:#4a7a3d">✓ 取得済み: legacy_plan = true / tax_category = null</div>
+            <div>invoice_export_enabled = true</div>
+            <div style="height:8px"></div>
+            <div style="color:#999">Error:</div>
+            <div style="background:#ffe08a;border-radius:4px;padding:1px 6px;display:inline-block;box-shadow:0 1px 0 #d8b24a">NoMethodError: undefined method `rate' for nil:NilClass</div>
+            <div style="margin-top:12px;font:12px/1.6 'Zen Kurenaido',sans-serif;color:#2a78d6">※ 常時ハイライトなし。ホバー時だけ取得可能と分かる／取得時は短い事実のみ・用途ヒントなし</div>
+          </div>
+        </div>
+
+        <!-- ドック（中央下・資料切替） -->
+        <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:100px;display:flex;align-items:flex-end;gap:8px;padding:8px 12px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.85);border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.18)">
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Slack</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Jira</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">PR</div>
+          <div style="position:relative;width:50px;height:50px;border-radius:12px;border:2px solid #2a78d6;background:#eef3fb;display:flex;align-items:center;justify-content:center;font-size:11px;color:#2a78d6">CI<span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#2a78d6"></span></div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555">Staging</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Mail</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555">Rollbk</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">FFlag</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555">過去</div>
+          <div style="width:1px;height:44px;background:rgba(0,0,0,.2);margin:0 2px"></div>
+          <div style="width:44px;height:44px;border-radius:11px;border:1.5px solid #c99a2a;background:#fff7e0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;color:#a67e1e;line-height:1.2">証拠<br>メモ</div>
+        </div>
+
+        <!-- 主人公コメント帯（最下部・常時表示） + 会議を開始（右） -->
+        <div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#fbfaf7;border-top:1.6px solid #1a1a1a;display:flex;align-items:center;gap:14px;padding:0 18px">
+          <div style="width:56px;height:56px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7ddd2,#d7ddd2 4px,#e8ede2 4px,#e8ede2 8px);border:1.6px solid #5a6b52;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#5a6b52">主人公</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;color:#888;margin-bottom:2px">取得: CI失敗ログ</div>
+            <div style="font-size:15px;line-height:1.55;color:#222">legacy_plan=true のケースだけ揃って落ちてる…これ、前回のtimeoutとは別物だ。会議で「flaky」で流されないようにしないと。</div>
+          </div>
+          <div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+            <span style="font-size:11px;color:#2a78d6">証拠が2枚以上そろった</span>
+            <button style="font-family:inherit;font-size:15px;padding:11px 22px;border:1.6px solid #1a1a1a;border-radius:10px;background:#ffe08a;color:#1a1a1a;box-shadow:0 3px 0 #1a1a1a">▸ 会議を開始</button>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:940px">「会議を開始」を押すと確認ポップアップ（下）が出る。主人公コメントは切替や取得のたびに更新され、常時ここで読める。</div>
+    </div>
+
+    <!-- 確認ポップアップ（別枠で拡大表示） -->
+    <div class="dv-opt" id="3b">
+      <div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>会議を開始 → 確認ポップアップ</div>
+      <div style="width:380px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden">
+        <div style="padding:20px 22px 12px">
+          <div style="font-size:18px;color:#1a1a1a;margin-bottom:9px">会議を開始しますか？</div>
+          <div style="font-size:14px;line-height:1.75;color:#c0663a">⚠ 会議を開始すると、探索（資料の閲覧・証拠の取得）には戻れません。</div>
+        </div>
+        <div style="display:flex;gap:10px;padding:12px 22px 20px">
+          <button style="flex:1;font-family:inherit;font-size:14px;padding:10px 0;border:1.5px solid #999;border-radius:8px;background:#f2f2f2;color:#555">いいえ</button>
+          <button style="flex:1;font-family:inherit;font-size:14px;padding:10px 0;border:1.6px solid #1a1a1a;border-radius:8px;background:#ffe08a;color:#1a1a1a;box-shadow:0 3px 0 #1a1a1a">はい、会議を始める</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="dv-next">次の一手の例：「探索はこれでOK、会議画面（<a class="dv-oid" href="#1c">1c</a> / <a class="dv-oid" href="#1d">1d</a>）に進もう」 · 「ウィンドウをもっと大きく／複数開けるように」 · 「主人公コメント帯に履歴を残したい」</p>
+</section>
+
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">探索画面 — OSデスクトップ化（<a class="dv-oid" href="#1b">1b</a> の作り直し）</span></div>
+  <div class="dv-legend">
+    <span>ドックで資料アプリを切替 → フル画面／証拠ボードは「メモ帳」アプリ／全体数・トラップ表記なし／会議開始は確認ポップアップ付き</span>
+  </div>
+
+  <div class="dv-opts">
+
+    <!-- ===== 2a macOS Dock 案 ===== -->
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>macOSドック案 — 中央にウィンドウ、下ドックで切替、コメントは左下バブル、会議開始は右下</div>
+      <div style="width:900px;height:600px;background:#dde3ec;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;position:relative;background-image:radial-gradient(circle at 30% 20%,#e7ecf3,#ccd5e2)">
+
+        <!-- メニューバー -->
+        <div style="height:26px;background:rgba(255,255,255,.72);border-bottom:1px solid rgba(0,0,0,.12);display:flex;align-items:center;gap:14px;padding:0 12px;font-size:12px;color:#333">
+          <span style="font-weight:700">■</span><span>資料ビューア</span><span style="color:#888">ファイル</span><span style="color:#888">表示</span>
+          <span style="margin-left:auto;color:#555">木 9:41</span>
+        </div>
+
+        <!-- 開いているウィンドウ -->
+        <div style="position:absolute;top:58px;left:180px;width:470px;background:#fff;border:1.5px solid #1a1a1a;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.22);overflow:hidden">
+          <div style="height:32px;display:flex;align-items:center;gap:7px;padding:0 12px;background:#f3f0ea;border-bottom:1.3px solid #ddd">
+            <span style="width:11px;height:11px;border-radius:50%;background:#e0655a;border:1px solid #b4483f"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#e8c14a;border:1px solid #c39c2c"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#7bbf6f;border:1px solid #549249"></span>
+            <span style="margin-left:8px;font-size:13px;color:#333">CI Log</span>
+          </div>
+          <div style="font:12px/1.9 ui-monospace,Menlo,monospace;color:#333;padding:14px 16px">
+            <div style="color:#999">Failed: CheckoutV2MigrationSpec</div>
+            <div style="color:#999">Case:</div>
+            <div style="background:#dff0d8;border:1px solid #b7d8ab;border-radius:4px;padding:1px 5px;display:inline-block;color:#4a7a3d">✓ 取得済み: legacy_plan=true / tax_category=null</div>
+            <div>invoice_export_enabled = true</div>
+            <div style="height:6px"></div>
+            <div style="color:#999">Error:</div>
+            <div style="background:#ffe08a;border-radius:4px;padding:1px 5px;display:inline-block;box-shadow:0 1px 0 #d8b24a">NoMethodError: undefined method `rate' for nil</div>
+            <div style="margin-top:10px;font:11px/1.5 'Zen Kurenaido',sans-serif;color:#2a78d6">※ ホバー時だけ取得可能と分かる／取得時は短い事実のみ</div>
+          </div>
+        </div>
+
+        <!-- 主人公コメント（常時表示・左下バブル） -->
+        <div style="position:absolute;left:16px;bottom:96px;width:320px;display:flex;gap:10px;align-items:flex-end">
+          <div style="width:50px;height:50px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7ddd2,#d7ddd2 4px,#e8ede2 4px,#e8ede2 8px);border:1.6px solid #5a6b52;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#5a6b52">主人公</div>
+          <div style="flex:1;background:#fff;border:1.5px solid #1a1a1a;border-radius:12px;border-bottom-left-radius:3px;padding:10px 13px;font-size:14px;line-height:1.6;color:#222;box-shadow:0 4px 10px rgba(0,0,0,.12)">
+            legacy_plan=true のケースだけ落ちてる…前回のtimeoutとは別物じゃないか？
+          </div>
+        </div>
+
+        <!-- ドック（中央下・アプリ切替） -->
+        <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:14px;display:flex;align-items:flex-end;gap:8px;padding:8px 12px;background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.8);border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.18);backdrop-filter:blur(6px)">
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Slack</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Jira</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">PR</div>
+          <div style="position:relative;width:50px;height:50px;border-radius:12px;border:2px solid #2a78d6;background:#eef3fb;display:flex;align-items:center;justify-content:center;font-size:11px;color:#2a78d6">CI<span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#2a78d6"></span></div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555">Staging</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">Mail</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555">Rollbk</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#555">FFlag</div>
+          <div style="width:42px;height:42px;border-radius:11px;border:1.4px solid #666;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:#555">過去</div>
+          <div style="width:1px;height:44px;background:rgba(0,0,0,.2);margin:0 2px"></div>
+          <div style="width:44px;height:44px;border-radius:11px;border:1.5px solid #c99a2a;background:#fff7e0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;color:#a67e1e;line-height:1.2">証拠<br>メモ</div>
+        </div>
+
+        <!-- 会議開始（右下） -->
+        <div style="position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div style="font-size:11px;color:#2a78d6;background:rgba(255,255,255,.7);border-radius:6px;padding:2px 7px">証拠は2枚以上そろった</div>
+          <button style="font-family:inherit;font-size:15px;padding:11px 20px;border:1.6px solid #1a1a1a;border-radius:11px;background:#ffe08a;color:#1a1a1a;box-shadow:0 3px 0 #1a1a1a">▸ 会議室に入る</button>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:900px">左端が空くので資料ウィンドウを大きく置ける。ドック＝資料アプリ切替、右端に証拠メモ.app。会議開始は右下に独立。</div>
+    </div>
+
+    <!-- ===== 2b Windows タスクバー案 + 確認ポップアップ ===== -->
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Windowsタスクバー案 — 全画面ウィンドウ + 幅広の主人公コメント帯 + 開始確認ポップアップ</div>
+      <div style="width:900px;height:600px;background:#e6e9ee;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;position:relative">
+
+        <!-- 全画面ウィンドウ -->
+        <div style="position:absolute;top:12px;left:12px;right:12px;bottom:150px;background:#fff;border:1.5px solid #1a1a1a;border-radius:9px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="height:32px;display:flex;align-items:center;gap:8px;padding:0 12px;background:#f3f0ea;border-bottom:1.3px solid #ddd">
+            <span style="font-size:13px;color:#333">Customer Email — 資料ビューア</span>
+            <span style="margin-left:auto;color:#999;font-size:14px">—  ▢  ✕</span>
+          </div>
+          <div style="flex:1;padding:18px 22px;font:14px/2 'Zen Kurenaido',sans-serif;color:#333">
+            <div>今月中に必要なのは、<span style="background:#ffe08a;border-radius:3px;padding:0 3px;box-shadow:0 1px 0 #d8b24a">請求書出力の新フォーマット対応</span>です。</div>
+            <div><span style="background:#dff0d8;border:1px solid #b7d8ab;border-radius:4px;padding:0 4px;color:#4a7a3d">✓ 取得済み: 新しい決済フロー全体は来月初旬でも問題ない</span></div>
+            <div>ただし、今月の請求処理に影響が出ると困ります。</div>
+          </div>
+        </div>
+
+        <!-- 主人公コメント帯（幅広・常時表示） -->
+        <div style="position:absolute;left:12px;right:12px;bottom:56px;height:82px;background:#fbfaf7;border:1.5px solid #1a1a1a;border-radius:9px;display:flex;align-items:center;gap:14px;padding:0 16px">
+          <div style="width:54px;height:54px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7ddd2,#d7ddd2 4px,#e8ede2 4px,#e8ede2 8px);border:1.6px solid #5a6b52;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#5a6b52">主人公</div>
+          <div style="flex:1">
+            <div style="font-size:12px;color:#888;margin-bottom:2px">取得: 顧客メール</div>
+            <div style="font-size:15px;line-height:1.6;color:#222">「今月中」って全部じゃなくて請求書出力だけか…。営業の"今月中"の前提、会議で分けられそうだ。</div>
+          </div>
+        </div>
+
+        <!-- タスクバー -->
+        <div style="position:absolute;left:0;right:0;bottom:0;height:48px;background:#1f2530;display:flex;align-items:center;gap:6px;padding:0 10px">
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aeb6c2">Slack</div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aeb6c2">Jira</div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aeb6c2">PR</div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aeb6c2">CI</div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:8px;color:#aeb6c2">Staging</div>
+          <div style="position:relative;width:36px;height:36px;border-radius:7px;border:1.6px solid #6fa8e6;background:#31415a;display:flex;align-items:center;justify-content:center;font-size:9px;color:#cfe0f5">Mail<span style="position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:16px;height:2px;background:#6fa8e6"></span></div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:8px;color:#aeb6c2">Rollbk</div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aeb6c2">FFlag</div>
+          <div style="width:34px;height:34px;border-radius:7px;border:1.3px solid #5a6270;background:#2b323f;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aeb6c2">過去</div>
+          <div style="width:36px;height:36px;border-radius:7px;border:1.4px solid #c99a2a;background:#3a3320;display:flex;align-items:center;justify-content:center;font-size:8px;color:#e5c877;text-align:center;line-height:1.1">証拠<br>メモ</div>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;padding:8px 18px;border:1.5px solid #ffe08a;border-radius:8px;background:#ffe08a;color:#1a1a1a">▸ 会議を開始</button>
+        </div>
+
+        <!-- 開始確認ポップアップ -->
+        <div style="position:absolute;inset:0;background:rgba(20,24,32,.42);display:flex;align-items:center;justify-content:center">
+          <div style="width:360px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.3);overflow:hidden">
+            <div style="padding:18px 20px 12px">
+              <div style="font-size:17px;color:#1a1a1a;margin-bottom:8px">会議を開始しますか？</div>
+              <div style="font-size:14px;line-height:1.7;color:#c0663a">⚠ 会議を開始すると、探索（資料の閲覧・証拠の取得）には戻れません。</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:12px 20px 18px">
+              <button style="flex:1;font-family:inherit;font-size:14px;padding:9px 0;border:1.5px solid #999;border-radius:8px;background:#f2f2f2;color:#555">いいえ</button>
+              <button style="flex:1;font-family:inherit;font-size:14px;padding:9px 0;border:1.6px solid #1a1a1a;border-radius:8px;background:#ffe08a;color:#1a1a1a;box-shadow:0 3px 0 #1a1a1a">はい、会議を始める</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:900px">主人公コメントを幅広の帯で常時表示（読み応えあり）。会議開始はタスクバー右のトレイ。押すと戻れない警告ポップアップ。</div>
+    </div>
+
+    <!-- ===== 2c 証拠メモ.app ===== -->
+    <div class="dv-opt" id="2c">
+      <div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>証拠メモ.app（証拠ボード）を開いた状態 — ドックから切替でフル画面</div>
+      <div style="width:560px;height:520px;background:#dde3ec;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;position:relative">
+        <div style="position:absolute;top:16px;left:16px;right:16px;bottom:16px;background:#fffdf5;border:1.5px solid #1a1a1a;border-radius:9px;box-shadow:0 8px 20px rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column">
+          <div style="height:32px;display:flex;align-items:center;gap:7px;padding:0 12px;background:#f6efd8;border-bottom:1.3px solid #e2d7ad">
+            <span style="width:11px;height:11px;border-radius:50%;background:#e0655a;border:1px solid #b4483f"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#e8c14a;border:1px solid #c39c2c"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#7bbf6f;border:1px solid #549249"></span>
+            <span style="margin-left:8px;font-size:13px;color:#333">証拠メモ.txt — メモ帳</span>
+          </div>
+          <div style="flex:1;padding:16px 18px;font:14px/1.9 'Zen Kurenaido',sans-serif;color:#2a2a2a;background:repeating-linear-gradient(#fffdf5,#fffdf5 33px,#f0ead2 33px,#f0ead2 34px)">
+            <div style="margin-bottom:14px"><b>■ CI失敗ログ</b><br>legacy_plan=true / tax_category=null で CheckoutV2MigrationSpec が失敗。</div>
+            <div style="margin-bottom:14px"><b>■ 顧客メール</b><br>今月中に必要なのは請求書出力。決済フロー全体は来月でも可。</div>
+            <div style="margin-bottom:14px"><b>■ ロールバック手順</b><br>customer_data_migration は本番write後の完全ロールバック不可。</div>
+            <div style="color:#aaa">＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿</div>
+            <div style="color:#999;font-size:13px">（資料の怪しい行をクリックするとここに追記される）</div>
+          </div>
+        </div>
+        <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:8px;font-size:11px;color:#2a78d6;background:rgba(255,255,255,.75);border-radius:6px;padding:3px 9px">全体枚数やトラップ表記は出さない。事実だけ淡々と。</div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:560px">証拠ボードは常時表示をやめ、独立アプリに。切り替えるとその分フル画面で読める。</div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">次の一手の例：「コメント欄は <a class="dv-oid" href="#2b">2b</a> の幅広帯、切替は <a class="dv-oid" href="#2a">2a</a> のドックで」 · 「会議開始アイコンをドック右端に統合して」 · 「メモ帳はもっと付箋っぽく」 · 「探索はこれでOK、次は会議画面へ」</p>
+</section>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Bias Meeting Game — 画面ワイヤーフレーム探索</span></div>
+  <div class="dv-legend">
+    <span><span style="display:inline-block;width:26px;height:13px;background:#ffe08a;border:1px solid #d8b24a;vertical-align:middle;margin-right:5px"></span>操作/選択できる箇所</span>
+    <span><span style="display:inline-block;width:26px;height:13px;border:1.4px dashed rgba(0,0,0,.4);vertical-align:middle;margin-right:5px"></span>プレースホルダ</span>
+    <span><span style="font:11px ui-monospace,monospace;background:#eee;padding:2px 5px;border-radius:3px;margin-right:5px">mono</span>技術資料/ログ</span>
+    <span style="color:#2a78d6">青字 = 仕様上の注記</span>
+  </div>
+
+  <div class="dv-opts">
+
+    <!-- ========== 1a 全体フロー ========== -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>全体フロー（4画面のストーリーボード）</div>
+      <div style="width:1040px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+          <span style="width:10px;height:10px;border-radius:50%;background:#e0655a;border:1px solid #b4483f"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#e8c14a;border:1px solid #c39c2c"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#7bbf6f;border:1px solid #549249"></span>
+          <span style="margin-left:8px;font-size:14px;color:#333">決済v2 Go/No-Go — ゲーム進行</span>
+        </div>
+        <div style="display:flex;align-items:stretch;gap:0;padding:26px 22px;background:#fbfaf7">
+
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+            <div style="font:11px ui-monospace,monospace;color:#888">01</div>
+            <div style="border:1.5px solid #333;border-radius:9px;background:#fff;padding:12px;height:150px;display:flex;flex-direction:column;gap:7px">
+              <div style="font-size:15px;color:#1a1a1a">Prologue / Slack導入</div>
+              <div style="flex:1;border:1.3px dashed rgba(0,0,0,.35);border-radius:6px;padding:7px;display:flex;flex-direction:column;gap:5px;overflow:hidden">
+                <div style="display:flex;gap:6px;align-items:center"><span style="width:16px;height:16px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999"></span><span style="height:6px;flex:1;background:#e8e8e8;border-radius:3px"></span></div>
+                <div style="display:flex;gap:6px;align-items:center"><span style="width:16px;height:16px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999"></span><span style="height:6px;flex:1;background:#e8e8e8;border-radius:3px"></span></div>
+                <div style="display:flex;gap:6px;align-items:center"><span style="width:16px;height:16px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999"></span><span style="height:6px;flex:1;background:#e8e8e8;border-radius:3px"></span></div>
+              </div>
+              <div style="font-size:12px;color:#666">#release-check で状況と各人の初期スタンスを把握</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 6px;font-size:26px;color:#bbb">›</div>
+
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+            <div style="font:11px ui-monospace,monospace;color:#888">02</div>
+            <div style="border:1.5px solid #333;border-radius:9px;background:#fff;padding:12px;height:150px;display:flex;flex-direction:column;gap:7px">
+              <div style="font-size:15px;color:#1a1a1a">Exploration / 資料探索</div>
+              <div style="flex:1;display:flex;gap:6px">
+                <div style="width:34%;border:1.3px dashed rgba(0,0,0,.35);border-radius:6px;background:#fafafa"></div>
+                <div style="flex:1;border:1.3px dashed rgba(0,0,0,.35);border-radius:6px;background:#fafafa;display:flex;flex-direction:column;gap:4px;padding:6px">
+                  <span style="height:5px;background:#e8e8e8;border-radius:3px"></span>
+                  <span style="height:5px;width:70%;background:#ffe08a;border-radius:3px"></span>
+                  <span style="height:5px;background:#e8e8e8;border-radius:3px"></span>
+                </div>
+                <div style="width:26%;border:1.3px dashed rgba(0,0,0,.35);border-radius:6px;background:#fafafa"></div>
+              </div>
+              <div style="font-size:12px;color:#666">怪しい行をクリック → 証拠カード化</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 6px;font-size:26px;color:#bbb">›</div>
+
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+            <div style="font:11px ui-monospace,monospace;color:#888">03</div>
+            <div style="border:1.5px solid #333;border-radius:9px;background:#fff;padding:12px;height:150px;display:flex;flex-direction:column;gap:7px">
+              <div style="font-size:15px;color:#1a1a1a">Meeting / 会議バトル</div>
+              <div style="flex:1;border:1.3px dashed rgba(0,0,0,.35);border-radius:6px;padding:7px;display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;gap:6px;align-items:center"><span style="width:20px;height:20px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999"></span><span style="height:14px;flex:1;background:#eef3fb;border:1px solid #cfe0f5;border-radius:4px"></span></div>
+                <div style="display:flex;gap:4px;margin-top:2px"><span style="flex:1;height:9px;background:#ffe08a;border-radius:3px"></span><span style="flex:1;height:9px;background:#ffe08a;border-radius:3px"></span><span style="flex:1;height:9px;background:#ffe08a;border-radius:3px"></span></div>
+              </div>
+              <div style="font-size:12px;color:#666">5ラウンド × 「発言箇所→証拠→出し方」</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 6px;font-size:26px;color:#bbb">›</div>
+
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+            <div style="font:11px ui-monospace,monospace;color:#888">04</div>
+            <div style="border:1.5px solid #333;border-radius:9px;background:#fff;padding:12px;height:150px;display:flex;flex-direction:column;gap:7px">
+              <div style="font-size:15px;color:#1a1a1a">Result / リザルト</div>
+              <div style="flex:1;border:1.3px dashed rgba(0,0,0,.35);border-radius:6px;padding:7px;display:flex;flex-direction:column;gap:5px">
+                <span style="height:16px;background:#dff0d8;border:1px solid #b7d8ab;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#4a7a3d">GOOD / GREAT</span>
+                <span style="height:5px;background:#e8e8e8;border-radius:3px"></span>
+                <span style="height:5px;width:80%;background:#e8e8e8;border-radius:3px"></span>
+              </div>
+              <div style="font-size:12px;color:#666">確認できた/できなかった事実・関連バイアス</div>
+            </div>
+          </div>
+
+        </div>
+        <div style="padding:11px 22px;border-top:1.3px solid #eee;background:#fff;font-size:13px;color:#2a78d6">Bad(全面リリース/決裂) · Normal(全面延期) · Good(分割リリース) · Great(分割+Go/No-Go基準明文化) の4分岐</div>
+      </div>
+    </div>
+
+    <!-- ========== 1b 探索画面 ========== -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>探索画面 — 資料リスト / 本文 / 証拠ボードの3ペイン</div>
+      <div style="width:840px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+          <span style="font-size:14px;color:#1a1a1a">資料探索 — 決済v2 リリース前夜</span>
+          <span style="margin-left:auto;font-size:12px;color:#666">残り資料を読んで違和感を集める</span>
+        </div>
+        <div style="display:flex;height:430px">
+
+          <!-- 資料リスト -->
+          <div style="width:210px;border-right:1.4px dashed rgba(0,0,0,.3);background:#faf9f6;padding:12px 10px;display:flex;flex-direction:column;gap:5px;overflow:hidden">
+            <div style="font-size:12px;color:#888;margin-bottom:3px">資料（最初から全て閲覧可）</div>
+            <div style="padding:7px 9px;border:1.3px solid #333;border-radius:6px;background:#fff;font-size:13px">Slack #release-check <span style="font-size:10px;color:#999">導入</span></div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px;background:#eef3fb;border-color:#2a78d6">CI Log <span style="font-size:10px;color:#2a78d6">閲覧中</span></div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">Jira BUG-418</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">PR Comment</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">Staging Log</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">Customer Email</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">Rollback手順</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">Feature Flag設計</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">過去障害報告</div>
+            <div style="padding:7px 9px;border:1.3px dashed rgba(0,0,0,.3);border-radius:6px;font-size:13px">CPUスパイクログ</div>
+          </div>
+
+          <!-- 本文 -->
+          <div style="flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:10px;overflow:hidden">
+            <div style="font-size:15px;color:#1a1a1a">CI Log</div>
+            <div style="font:12px/1.9 ui-monospace,Menlo,monospace;color:#333;background:#f7f7f4;border:1.3px solid #e2e0da;border-radius:8px;padding:12px 14px;flex:1">
+              <div style="color:#999">Failed: CheckoutV2MigrationSpec</div>
+              <div style="color:#999">Seed: 18433</div>
+              <div style="height:8px"></div>
+              <div style="color:#999">Case:</div>
+              <div style="background:#dff0d8;border:1px solid #b7d8ab;border-radius:4px;padding:1px 5px;display:inline-block;color:#4a7a3d">✓ 取得済み: legacy_plan = true / tax_category = null</div>
+              <div>invoice_export_enabled = true</div>
+              <div style="height:8px"></div>
+              <div style="color:#999">Error:</div>
+              <div style="background:#ffe08a;border-radius:4px;padding:1px 5px;display:inline-block;box-shadow:0 1px 0 #d8b24a" title="ホバーで取得可能">NoMethodError: undefined method `rate' for nil</div>
+            </div>
+            <div style="font-size:12px;color:#2a78d6">※ 常時ハイライトなし。ホバー時だけ取得できると分かる／取得時は短い事実のみ表示・用途ヒントなし／重要行と罠行は見た目で区別しない</div>
+          </div>
+
+          <!-- 証拠ボード -->
+          <div style="width:200px;border-left:1.4px dashed rgba(0,0,0,.3);background:#faf9f6;padding:12px 11px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:13px;color:#1a1a1a">証拠ボード</div>
+            <div style="border:1.3px solid #333;border-radius:7px;background:#fff;padding:8px 9px">
+              <div style="font-size:12px;color:#1a1a1a">CI失敗ログ</div>
+              <div style="font-size:10px;color:#777;line-height:1.5;margin-top:2px">legacy_plan=true / tax_category=null で失敗</div>
+            </div>
+            <div style="border:1.3px dashed rgba(0,0,0,.3);border-radius:7px;height:44px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#aaa">空きスロット</div>
+            <div style="border:1.3px dashed rgba(0,0,0,.3);border-radius:7px;height:44px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#aaa">空きスロット</div>
+            <div style="margin-top:auto;font-size:12px;color:#666;text-align:center">取得 <b style="color:#1a1a1a">1</b> / 8</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;border-top:1.4px solid #1a1a1a;background:#f3f0ea">
+          <span style="font-size:12px;color:#c0663a">⚠ 証拠カード2枚以上で会議開始。開始後は探索に戻れません（罠カードも枚数に含む）</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;padding:8px 20px;border:1.6px solid #999;border-radius:8px;background:#eee;color:#aaa;box-shadow:0 2px 0 #ccc">会議を開始（あと1枚）</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 1c 会議画面 A ========== -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>会議バトル A — ADV下部ウィンドウ + 議事録サイドパネル</div>
+      <div style="width:900px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:12px;padding:9px 14px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+          <span style="font-size:14px;color:#1a1a1a">会議バトル</span>
+          <span style="font:12px ui-monospace,monospace;background:#1a1a1a;color:#fff;padding:2px 8px;border-radius:4px">ROUND 2 / 5</span>
+          <span style="margin-left:auto;display:flex;gap:5px;align-items:center">
+            <span style="width:26px;height:26px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">佐伯</span>
+            <span style="width:30px;height:30px;border-radius:50%;background:repeating-linear-gradient(45deg,#cfe0f5,#cfe0f5 3px,#e6f0fb 3px,#e6f0fb 6px);border:2px solid #2a78d6;font-size:9px;display:flex;align-items:center;justify-content:center;color:#2a78d6">黒瀬</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">桐谷</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">三村</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1px solid #999;font-size:9px;display:flex;align-items:center;justify-content:center;color:#777">榊</span>
+          </span>
+        </div>
+        <div style="display:flex;height:470px">
+
+          <!-- 左: ADV + 3段選択 -->
+          <div style="flex:1;display:flex;flex-direction:column;padding:16px 18px;gap:12px;background:#fbfaf7">
+            <!-- 話者 + セリフ -->
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:56px;height:56px;border-radius:50%;background:repeating-linear-gradient(45deg,#dfe8f2,#dfe8f2 4px,#eef3fb 4px,#eef3fb 8px);border:1.6px solid #2a78d6;flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:#2a78d6">立ち絵</div>
+              <div style="flex:1">
+                <div style="font-size:13px;color:#2a78d6;margin-bottom:4px">黒瀬 <span style="color:#999">Tech Lead</span></div>
+                <div style="border:1.6px solid #1a1a1a;border-radius:10px;background:#fff;padding:13px 15px;font-size:16px;line-height:1.85;position:relative">
+                  このテストは<span style="background:#ffe08a;border-radius:3px;padding:0 3px;box-shadow:0 1px 0 #d8b24a">前から不安定</span>です。<span style="background:#ffe08a;border-radius:3px;padding:0 3px;box-shadow:0 1px 0 #d8b24a">実装の問題ではない</span>、<span style="background:#ffe08a;border-radius:3px;padding:0 3px;box-shadow:0 1px 0 #d8b24a">テスト側の問題</span>だと思います。
+                </div>
+                <div style="font-size:12px;color:#2a78d6;margin-top:5px">↑ 怪しい箇所（発言箇所）をタップして狙う</div>
+              </div>
+            </div>
+
+            <!-- 3段ステッパー -->
+            <div style="border:1.4px dashed rgba(0,0,0,.3);border-radius:10px;background:#fff;padding:13px 14px;display:flex;flex-direction:column;gap:11px;flex:1">
+              <div>
+                <div style="font-size:12px;color:#888;margin-bottom:5px">STEP 1 — 発言箇所</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap">
+                  <span style="font-size:13px;padding:5px 11px;border:1.4px solid #2a78d6;border-radius:20px;background:#eef3fb;color:#2a78d6">前から不安定 ✓</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px solid #ccc;border-radius:20px;color:#555">実装の問題ではない</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px solid #ccc;border-radius:20px;color:#555">テスト側の問題</span>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#888;margin-bottom:5px">STEP 2 — 証拠カード（所持 + 「証拠なし」）</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap">
+                  <span style="font-size:13px;padding:5px 11px;border:1.4px solid #2a78d6;border-radius:8px;background:#eef3fb;color:#2a78d6">CI失敗ログ ✓</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px solid #ccc;border-radius:8px;color:#555">staging障害ログ</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px solid #ccc;border-radius:8px;color:#555">PRコメント</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px dashed #bbb;border-radius:8px;color:#888">証拠なし</span>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#888;margin-bottom:5px">STEP 3 — 出し方（ラウンド固定候補）</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap">
+                  <span style="font-size:13px;padding:5px 11px;border:1.4px solid #2a78d6;border-radius:8px;background:#eef3fb;color:#2a78d6">失敗条件を確認する ✓</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px solid #ccc;border-radius:8px;color:#555">設計全体でなくlegacy条件に絞る</span>
+                  <span style="font-size:13px;padding:5px 11px;border:1.3px solid #ccc;border-radius:8px;color:#555">「設計ミスですよね」と攻める</span>
+                </div>
+              </div>
+            </div>
+
+            <button style="font-family:inherit;font-size:15px;padding:10px 0;border:1.6px solid #1a1a1a;border-radius:9px;background:#ffe08a;color:#1a1a1a;box-shadow:0 3px 0 #1a1a1a">この発言をする（残り1アクション）</button>
+          </div>
+
+          <!-- 右: 議事録 -->
+          <div style="width:250px;border-left:1.4px solid #1a1a1a;background:#faf9f6;display:flex;flex-direction:column">
+            <div style="padding:11px 13px;border-bottom:1.3px dashed rgba(0,0,0,.3);font-size:13px;color:#1a1a1a">議事録（会議ログ・読み取り専用）</div>
+            <div style="flex:1;padding:12px 13px;display:flex;flex-direction:column;gap:9px;overflow:hidden">
+              <div style="border:1.2px solid #e2e0da;border-radius:7px;background:#fff;padding:8px 10px;font-size:12px;line-height:1.6;color:#444;cursor:pointer">佐伯は、前回も似た警告が出て問題なかったと説明した。<span style="color:#2a78d6;font-size:11px">クリックで詳細 ▾</span></div>
+              <div style="border:1.2px solid #e2e0da;border-radius:7px;background:#fff;padding:8px 10px;font-size:12px;line-height:1.6;color:#444;cursor:pointer">プレイヤーはCI失敗ログを示し、前回と今回で失敗条件が異なると確認した。<span style="color:#2a78d6;font-size:11px">クリックで詳細 ▾</span></div>
+              <div style="border:1.2px dashed rgba(0,0,0,.25);border-radius:7px;padding:8px 10px;font-size:12px;color:#aaa">…このラウンドの記録がここに追記される</div>
+            </div>
+            <div style="padding:10px 13px;border-top:1.3px dashed rgba(0,0,0,.3);font-size:11px;color:#2a78d6;line-height:1.5">※ 事実だけを淡々と記録。成功/失敗・ゲージ・バイアス名は出さない</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 1d 会議画面 B ========== -->
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>会議バトル B — 中央カード + 3列パネル、議事録はドロワー</div>
+      <div style="width:900px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden;position:relative">
+        <div style="display:flex;align-items:center;gap:12px;padding:9px 14px;background:#f3f0ea;border-bottom:1.4px solid #1a1a1a">
+          <span style="font-size:14px;color:#1a1a1a">会議バトル</span>
+          <span style="display:flex;gap:5px;margin-left:6px">
+            <span style="width:8px;height:8px;border-radius:50%;background:#1a1a1a"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#1a1a1a"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#ffe08a;border:1px solid #d8b24a"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#ddd"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#ddd"></span>
+          </span>
+          <span style="margin-left:auto;font-size:12px;color:#2a78d6;border:1.3px solid #2a78d6;border-radius:7px;padding:4px 10px;cursor:pointer">📋 議事録を開く ›</span>
+        </div>
+
+        <!-- 参加者バー -->
+        <div style="display:flex;justify-content:center;gap:26px;padding:16px 0 8px;background:#fbfaf7">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.55"><span style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999"></span><span style="font-size:11px;color:#777">佐伯 PM</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:52px;height:52px;border-radius:50%;background:repeating-linear-gradient(45deg,#dfe8f2,#dfe8f2 4px,#eef3fb 4px,#eef3fb 8px);border:2px solid #2a78d6;box-shadow:0 3px 0 rgba(42,120,214,.25)"></span><span style="font-size:12px;color:#2a78d6">黒瀬 TechLead</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.55"><span style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999"></span><span style="font-size:11px;color:#777">桐谷 Sales</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.55"><span style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999"></span><span style="font-size:11px;color:#777">三村 QA</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.55"><span style="width:38px;height:38px;border-radius:50%;background:repeating-linear-gradient(45deg,#e6e6e6,#e6e6e6 3px,#f4f4f4 3px,#f4f4f4 6px);border:1.4px solid #999"></span><span style="font-size:11px;color:#777">榊 CTO</span></div>
+        </div>
+
+        <!-- 発言カード -->
+        <div style="margin:8px 26px 14px;border:1.6px solid #1a1a1a;border-radius:12px;background:#fff;padding:15px 20px;text-align:center;font-size:17px;line-height:1.85">
+          このテストは<span style="background:#ffe08a;border-radius:3px;padding:0 3px;box-shadow:0 1px 0 #d8b24a">前から不安定</span>です。<span style="background:#ffe08a;border-radius:3px;padding:0 3px;box-shadow:0 1px 0 #d8b24a">実装の問題ではない</span>と思います。
+        </div>
+
+        <!-- 3列 -->
+        <div style="display:flex;gap:12px;padding:0 26px 16px">
+          <div style="flex:1;border:1.4px dashed rgba(0,0,0,.3);border-radius:10px;background:#faf9f6;padding:11px">
+            <div style="font-size:12px;color:#888;margin-bottom:8px;text-align:center">① 発言箇所</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:13px;padding:7px 8px;border:1.4px solid #2a78d6;border-radius:7px;background:#eef3fb;color:#2a78d6;text-align:center">前から不安定 ✓</span>
+              <span style="font-size:13px;padding:7px 8px;border:1.3px solid #ccc;border-radius:7px;color:#555;text-align:center">実装の問題ではない</span>
+            </div>
+          </div>
+          <div style="flex:1;border:1.4px dashed rgba(0,0,0,.3);border-radius:10px;background:#faf9f6;padding:11px">
+            <div style="font-size:12px;color:#888;margin-bottom:8px;text-align:center">② 証拠カード</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:13px;padding:7px 8px;border:1.4px solid #2a78d6;border-radius:7px;background:#eef3fb;color:#2a78d6;text-align:center">CI失敗ログ ✓</span>
+              <span style="font-size:13px;padding:7px 8px;border:1.3px solid #ccc;border-radius:7px;color:#555;text-align:center">staging障害ログ</span>
+              <span style="font-size:12px;padding:6px 8px;border:1.3px dashed #bbb;border-radius:7px;color:#888;text-align:center">証拠なし</span>
+            </div>
+          </div>
+          <div style="flex:1;border:1.4px dashed rgba(0,0,0,.3);border-radius:10px;background:#faf9f6;padding:11px">
+            <div style="font-size:12px;color:#888;margin-bottom:8px;text-align:center">③ 出し方</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:13px;padding:7px 8px;border:1.3px solid #ccc;border-radius:7px;color:#555;text-align:center">失敗条件を確認する</span>
+              <span style="font-size:13px;padding:7px 8px;border:1.3px solid #ccc;border-radius:7px;color:#555;text-align:center">legacy条件に絞る</span>
+              <span style="font-size:13px;padding:7px 8px;border:1.3px solid #ccc;border-radius:7px;color:#555;text-align:center">強く攻める</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ドロワー影 -->
+        <div style="position:absolute;top:44px;right:0;bottom:0;width:150px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.06));border-left:1.4px dashed rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:11px;color:#999;text-align:center;padding:8px">議事録ドロワー<br>（右からスライドイン）</div>
+      </div>
+    </div>
+
+    <!-- ========== 1e リザルト ========== -->
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>リザルト画面 — エンド / 事実の確認 / 関連バイアス（下段）</div>
+      <div style="width:760px;background:#fff;border:1.6px solid #1a1a1a;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.12);overflow:hidden">
+        <div style="padding:18px 22px;background:#dff0d8;border-bottom:1.6px solid #1a1a1a">
+          <div style="font:12px ui-monospace,monospace;color:#4a7a3d">ENDING</div>
+          <div style="font-size:24px;color:#2f5a24;margin-top:2px">GREAT — 分割リリース + Go/No-Go基準の明文化</div>
+        </div>
+        <div style="padding:18px 22px;display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:13px;color:#888;margin-bottom:5px">最終判断</div>
+            <div style="font-size:15px;line-height:1.7;color:#333;border-left:3px solid #7bbf6f;padding-left:12px">invoice export のみ段階リリース。checkout_v2 UI は feature flag off。customer_data_migration は延期。</div>
+          </div>
+
+          <div style="display:flex;gap:14px">
+            <div style="flex:1;border:1.3px solid #b7d8ab;border-radius:9px;background:#f4faf1;padding:12px 14px">
+              <div style="font-size:13px;color:#4a7a3d;margin-bottom:7px">✓ 確認できた事実</div>
+              <div style="font-size:13px;line-height:1.7;color:#444">・顧客が今月中に必要なのは請求書出力だった<br>・customer_data_migration は完全ロールバック不可だった</div>
+            </div>
+            <div style="flex:1;border:1.3px dashed rgba(0,0,0,.3);border-radius:9px;background:#faf9f6;padding:12px 14px">
+              <div style="font-size:13px;color:#999;margin-bottom:7px">— 確認できなかった事実</div>
+              <div style="font-size:13px;line-height:1.7;color:#666">・（このプレイでは全論点を確認済み）</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px">
+            <span style="padding:4px 10px;border-radius:20px;background:#eef7ea;border:1px solid #b7d8ab;color:#4a7a3d">Sales 桐谷 → 味方化</span>
+            <span style="padding:4px 10px;border-radius:20px;background:#eef7ea;border:1px solid #b7d8ab;color:#4a7a3d">QA 三村 → 味方化</span>
+            <span style="padding:4px 10px;border-radius:20px;background:#f0f0f0;border:1px solid #ccc;color:#666">Tech Lead 黒瀬 → 敵化せず</span>
+          </div>
+
+          <div style="border:1.3px solid #e2e0da;border-radius:9px;background:#f7f7f4;padding:12px 14px">
+            <div style="font-size:13px;color:#1a1a1a;margin-bottom:6px">明文化されたルール</div>
+            <div style="font:12px/1.9 ui-monospace,monospace;color:#444">1. 同一条件で複数回落ちるCIはflaky扱いしない<br>2. ロールバック不能なwrite/migrationはGo/No-Go前に明示する<br>3. 顧客要求は「期限」だけでなく「必要機能の範囲」まで確認する</div>
+          </div>
+
+          <div style="border-top:1.3px dashed rgba(0,0,0,.25);padding-top:12px">
+            <div style="font-size:13px;color:#888;margin-bottom:6px">判断を歪めた可能性のある前提 <span style="color:#2a78d6">（バイアス名はここで初めて添える・主見出しにしない）</span></div>
+            <div style="font-size:13px;line-height:1.8;color:#444">・前回と今回のCI失敗を同じ警告として扱いかけた <span style="color:#999;font-size:11px">関連: 正常性バイアス / 確証バイアス</span><br>・顧客の「今月中」を決済v2全体の期限として扱いかけた <span style="color:#999;font-size:11px">関連: アンカリング / フレーミング効果</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">次の一手の例：「会議画面は <a class="dv-oid" href="#1c">1c</a> の方向で1案を作り込んで」 · 「探索 <a class="dv-oid" href="#1b">1b</a> の証拠ボードをもっとカードゲームっぽく」 · 「<a class="dv-oid" href="#1d">1d</a> の議事録ドロワーを常時サイド表示に」 · 「別方向の会議レイアウトも見たい」</p>
+</section>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,355 @@
+# Data model draft for the MVP prototype.
+# This is a handoff artifact, not a final implementation contract.
+
+battle:
+  id: go_no_go_payment_v2
+  title: "決済v2 Go/No-Go会議"
+  player_role: "Senior Engineer"
+  global_params:
+    heat: 1
+    clarity: 1
+    support: 1
+    time: 5
+    momentum: release
+  premise_lock:
+    same_as_last_time: 0
+    flaky_test: 0
+    customer_needs_all_features: 0
+    stop_everything: 0
+    rollback_risk: 0
+
+characters:
+  - id: pm_saeki
+    name: "佐伯"
+    role: "PM"
+    stance: release
+    params:
+      confidence: 4
+      defensiveness: 2
+      face: 3
+      anxiety: 3
+      authority: 2
+      trust_to_player: 2
+    hidden_goal: "延期による評価低下を避け、顧客説明を軽くしたい"
+    protects: ["納期", "チームの努力", "自分の評価"]
+    biases: [sunk_cost, normalcy_bias, planning_fallacy, self_serving_bias]
+
+  - id: techlead_kurose
+    name: "黒瀬"
+    role: "Tech Lead"
+    stance: design_defense
+    params:
+      confidence: 5
+      defensiveness: 4
+      face: 4
+      anxiety: 2
+      authority: 4
+      trust_to_player: 2
+    hidden_goal: "自分の設計判断を守りたい"
+    protects: ["設計の正当性", "技術的評価", "チーム速度"]
+    biases: [confirmation_bias, self_serving_bias, authority_bias, halo_effect]
+
+  - id: qa_mimura
+    name: "三村"
+    role: "QA"
+    stance: stop
+    params:
+      confidence: 4
+      defensiveness: 3
+      face: 2
+      anxiety: 5
+      authority: 2
+      trust_to_player: 2
+    hidden_goal: "前回のようにQAが責められる状況を避けたい"
+    protects: ["品質", "顧客影響", "QAチームの信用"]
+    biases: [loss_aversion, availability_heuristic]
+
+  - id: sales_kiritani
+    name: "桐谷"
+    role: "Sales"
+    stance: customer_promise
+    params:
+      confidence: 4
+      defensiveness: 3
+      face: 3
+      anxiety: 4
+      authority: 2
+      trust_to_player: 2
+    hidden_goal: "顧客信用と売上を守りたい"
+    protects: ["顧客関係", "契約", "売上"]
+    biases: [anchoring, framing_effect, loss_aversion]
+
+  - id: cto_sakaki
+    name: "榊"
+    role: "CTO"
+    stance: decide
+    params:
+      confidence: 3
+      defensiveness: 2
+      face: 4
+      anxiety: 3
+      authority: 5
+      trust_to_player: 3
+    hidden_goal: "事業速度を落とさず、重大事故を避けたい"
+    protects: ["事業速度", "技術組織の信用", "経営説明"]
+    biases: [optimism_bias, authority_bias, normalcy_bias]
+
+evidence:
+  - id: ci_legacy_failure
+    title: "CI失敗ログ"
+    text: "legacy_plan=true かつ tax_category=null のケースで CheckoutV2MigrationSpec が3回連続失敗。"
+    source: "CI"
+    credibility: 5
+    specificity: 5
+    aggression: 2
+    ambiguity: 1
+    misuse_risk: 1
+    relevance:
+      claim_same_as_last_time: 5
+      claim_flaky_test: 5
+      claim_customer_deadline: 0
+      claim_stop_everything: 2
+    unlocks: [condition_based_bug]
+
+  - id: pr_tax_category_comment
+    title: "PRコメント: tax_category懸念"
+    text: "Reviewerがlegacy customer の tax_category=null で参照エラーが起きないか指摘。"
+    source: "GitHub PR"
+    credibility: 4
+    specificity: 4
+    aggression: 4
+    ambiguity: 2
+    misuse_risk: 3
+    relevance:
+      claim_flaky_test: 4
+      claim_design_ok: 5
+    unlocks: [prior_concern_found]
+
+  - id: staging_500_log
+    title: "staging障害ログ"
+    text: "stagingで tax_category=null のcheckoutが500を返している。"
+    source: "Staging Log"
+    credibility: 5
+    specificity: 5
+    aggression: 2
+    ambiguity: 1
+    misuse_risk: 1
+    relevance:
+      claim_flaky_test: 5
+      claim_design_ok: 4
+
+  - id: customer_email_scope
+    title: "顧客メール: 必要範囲"
+    text: "今月中に必要なのは請求書出力。新決済フローは来月初旬でもよい。"
+    source: "Customer Email"
+    credibility: 5
+    specificity: 5
+    aggression: 1
+    ambiguity: 1
+    misuse_risk: 1
+    relevance:
+      claim_customer_deadline: 5
+      claim_customer_needs_all_features: 5
+    unlocks: [scope_split]
+
+  - id: rollback_procedure
+    title: "ロールバック手順"
+    text: "checkout_v2 UI と invoice export は戻せるが、customer_data_migration は完全ロールバック不可。"
+    source: "Runbook"
+    credibility: 5
+    specificity: 5
+    aggression: 1
+    ambiguity: 1
+    misuse_risk: 1
+    relevance:
+      claim_stop_everything: 5
+      final_decision: 5
+    unlocks: [migration_risk_identified]
+
+  - id: feature_flag_design
+    title: "Feature Flag設計"
+    text: "checkout_v2_enabled, invoice_export_v2_enabled, migration_write_enabled を個別制御可能。"
+    source: "Design Doc"
+    credibility: 4
+    specificity: 5
+    aggression: 1
+    ambiguity: 1
+    misuse_risk: 1
+    relevance:
+      claim_stop_everything: 5
+      final_decision: 5
+    unlocks: [split_release]
+
+  - id: past_incident_report
+    title: "過去障害報告"
+    text: "3か月前、staging警告をflaky扱いして本番障害。ただし原因はタイムゾーンで今回とは直接同一ではない。"
+    source: "Incident Report"
+    credibility: 4
+    specificity: 3
+    aggression: 2
+    ambiguity: 3
+    misuse_risk: 3
+    relevance:
+      claim_same_as_last_time: 3
+      claim_stop_everything: 2
+
+  - id: cpu_spike_log
+    title: "CPUスパイクログ"
+    text: "staging CPU spike。原因は別チームの負荷テスト。今回のmigrationとは関係が薄い。"
+    source: "Metrics"
+    credibility: 3
+    specificity: 3
+    aggression: 2
+    ambiguity: 4
+    misuse_risk: 5
+    relevance:
+      claim_flaky_test: 0
+      claim_same_as_last_time: 0
+
+claims:
+  - id: claim_same_as_last_time
+    round: 1
+    speaker: pm_saeki
+    text: "前回も似た警告は出ましたけど、結局問題ありませんでしたよね。"
+    target_phrases:
+      - phrase: "前回も似た警告"
+        issue: premise_error
+        best_evidence: ci_legacy_failure
+        best_action: comparison_question
+      - phrase: "問題ありませんでした"
+        issue: normalcy_bias
+        best_evidence: past_incident_report
+        best_action: compare_context
+
+  - id: claim_flaky_test
+    round: 2
+    speaker: techlead_kurose
+    text: "このテストは前から不安定です。実装の問題というより、テスト側の問題だと思います。"
+    target_phrases:
+      - phrase: "前から不安定"
+        issue: unsupported_flaky_claim
+        best_evidence: ci_legacy_failure
+        best_action: condition_check
+      - phrase: "実装の問題ではない"
+        issue: premature_exclusion
+        best_evidence: staging_500_log
+        best_action: face_saving
+
+  - id: claim_customer_deadline
+    round: 3
+    speaker: sales_kiritani
+    text: "顧客には今月中に出すと伝えています。ここで延期したら信用を失います。"
+    target_phrases:
+      - phrase: "今月中に出す"
+        issue: scope_ambiguity
+        best_evidence: customer_email_scope
+        best_action: scope_decomposition
+      - phrase: "信用を失います"
+        issue: loss_framing
+        best_evidence: customer_email_scope
+        best_action: interest_translation
+
+  - id: claim_stop_everything
+    round: 4
+    speaker: qa_mimura
+    text: "それでも危険です。全部止めるべきです。"
+    target_phrases:
+      - phrase: "危険"
+        issue: valid_risk
+        best_evidence: rollback_procedure
+        best_action: empathize_then_split
+      - phrase: "全部"
+        issue: overbroad_scope
+        best_evidence: feature_flag_design
+        best_action: split_scope
+
+actions:
+  - id: direct_objection
+    label: "強く反論"
+    claim_damage: 3
+    heat_delta: 2
+    clarity_delta: 1
+    support_delta: 0
+    trust_delta: -1
+    time_delta: 0
+
+  - id: comparison_question
+    label: "比較質問"
+    claim_damage: 2
+    heat_delta: 0
+    clarity_delta: 2
+    support_delta: 1
+    trust_delta: 0
+    time_delta: -1
+
+  - id: condition_check
+    label: "条件確認"
+    claim_damage: 2
+    heat_delta: 0
+    clarity_delta: 2
+    support_delta: 1
+    trust_delta: 0
+    time_delta: -1
+
+  - id: empathize_then_split
+    label: "共感してから分割"
+    claim_damage: 2
+    heat_delta: -1
+    clarity_delta: 2
+    support_delta: 1
+    trust_delta: 1
+    time_delta: -1
+
+  - id: face_saving
+    label: "退路提示"
+    claim_damage: 1
+    heat_delta: -1
+    clarity_delta: 1
+    support_delta: 1
+    trust_delta: 1
+    time_delta: 0
+
+  - id: pin_statement
+    label: "議事録にピン留め"
+    claim_damage: 0
+    heat_delta: 0
+    clarity_delta: 0
+    support_delta: 0
+    trust_delta: 0
+    time_delta: 0
+    premise_lock_delta: 1
+
+  - id: minute_revision
+    label: "議事録修正"
+    claim_damage: 0
+    heat_delta: 0
+    clarity_delta: 2
+    support_delta: 1
+    trust_delta: 0
+    time_delta: 0
+
+endings:
+  - id: bad_full_release
+    title: "Bad: 強行リリース"
+    conditions: [flaky_test_locked, customer_scope_unresolved, rollback_risk_unresolved]
+    outcome: "本番でlegacy顧客のcheckoutが500。ロールバック困難。"
+
+  - id: bad_meeting_breakdown
+    title: "Bad: 会議決裂"
+    conditions: [heat_gte_5, support_lte_0]
+    outcome: "会議が責任押し付けに変わり、CTOが強引に判断。"
+
+  - id: normal_full_delay
+    title: "Normal: 全面延期"
+    conditions: [stop_momentum, customer_scope_unresolved]
+    outcome: "事故は防ぐが、顧客説明と社内信頼に傷。"
+
+  - id: good_split_release
+    title: "Good: 分割リリース"
+    conditions: [customer_scope_resolved, rollback_risk_resolved, split_release_unlocked]
+    outcome: "invoice exportのみリリース。migrationは延期。"
+
+  - id: great_split_release_with_rule
+    title: "Great: 分割リリース + ルール化"
+    conditions: [customer_scope_resolved, rollback_risk_resolved, split_release_unlocked, heat_lte_3, support_gte_4, minute_revision_success, go_no_go_rule_proposed]
+    outcome: "分割リリースに加え、次回Go/No-Go基準が制度化。"

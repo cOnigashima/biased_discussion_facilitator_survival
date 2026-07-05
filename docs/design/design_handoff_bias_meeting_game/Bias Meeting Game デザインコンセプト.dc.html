@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Sans+JP:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#e7e4dd;font-family:'Zen Kaku Gothic New',system-ui,sans-serif}
+  .dv-turn{padding:44px 48px 40px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px 'JetBrains Mono',monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:700 15px/1.3 'Zen Kaku Gothic New',sans-serif;color:#1a1a1a}
+  .dv-note{margin:0 0 26px;font:13px/1.75 'Zen Kaku Gothic New',sans-serif;color:rgba(0,0,0,.55);max-width:1400px}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:11px}
+  .dv-oid{font:600 11px 'JetBrains Mono',monospace;padding:3px 8px;background:rgba(0,0,0,.09);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:400 13px/1.35 'Zen Kaku Gothic New',sans-serif;color:rgba(0,0,0,.6)}
+  .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+  .dv-next{margin:28px 0 0;font:14px/1.7 'Zen Kaku Gothic New',sans-serif;color:rgba(0,0,0,.55)}
+  .dv-next a{color:#2a78d6}
+  .sw{width:38px;height:38px;border-radius:9px;border:1px solid rgba(0,0,0,.15)}
+  .swlab{font:500 9px 'JetBrains Mono',monospace;color:#999;margin-top:4px;text-align:center;letter-spacing:.02em}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t4">
+  <div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">脱・量産SaaS感 — <a class="dv-oid" href="#3a">3a</a>の配色のまま、構図とディテールで作家性を出す</span></div>
+  <p class="dv-note">"AIっぽさ"の正体：全部同じ角丸カード / ふわっとしたドロップ影 / グラデ見出し / ピル型ボタン / 中央寄せ。配色（青×白＋暖色差し色）は維持しつつ、これらを外して質感を作る2方向：<a class="dv-oid" href="#4a">4a</a>=設計書/エディトリアル（罫線・モノ空ペース・インデックス番号）、<a class="dv-oid" href="#4b">4b</a>=アウトライン＋ハード影（ゲームらしい実体感）。</p>
+
+  <div class="dv-opts">
+
+    <!-- 4a Editorial -->
+    <div class="dv-opt" id="4a">
+      <div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a>設計書 / エディトリアル — 罫線・モノスペース・インデックス番号で"作られた感"</div>
+      <div style="width:520px;background:#fbfaf8;border:1px solid #1b2735;overflow:hidden;font-family:'IBM Plex Sans JP',sans-serif">
+        <!-- system label row -->
+        <div style="display:flex;align-items:center;gap:0;border-bottom:1px solid #1b2735">
+          <div style="width:52px;align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid #1b2735;font:700 20px 'IBM Plex Mono',monospace;color:#1b2735">01</div>
+          <div style="flex:1;padding:10px 16px">
+            <div style="font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.18em;color:#8a8377;display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;background:#ec7a4f;display:inline-block"></span>STAGE 01 / GO — NO-GO · RELEASE EVE</div>
+            <div style="font:700 25px/1.15 'Zen Maru Gothic',sans-serif;color:#1b2735;margin-top:4px;letter-spacing:-.01em">決済v2 リリース判定会議</div>
+          </div>
+        </div>
+
+        <div style="padding:12px 16px;border-bottom:1px dashed #d8d0c0;font:500 12px/1.7 'IBM Plex Mono',monospace;color:#6b6559">role: senior_engineer &nbsp;·&nbsp; case: <span style="color:#c85e34">legacy_plan=true / tax_category=null</span></div>
+
+        <!-- meeting -->
+        <div style="padding:16px 16px 8px">
+          <div style="font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#a89c88;margin-bottom:12px">— 会議バトル / ROUND 02</div>
+
+          <div style="display:flex;gap:12px;margin-bottom:14px">
+            <div style="width:40px;height:40px;background:repeating-linear-gradient(45deg,#dfe4ec,#dfe4ec 4px,#eef1f6 4px,#eef1f6 8px);border:1px solid #1b2735;flex:none;display:flex;align-items:center;justify-content:center;font:8px 'IBM Plex Mono';color:#5a6576;text-align:center;line-height:1.1">ハヤ<br>ブサ</div>
+            <div style="flex:1">
+              <div style="font-size:13px;color:#1b2735"><b>黒瀬</b> <span style="font:500 10px 'IBM Plex Mono';color:#8a8377">TECH_LEAD</span></div>
+              <div style="border-left:2px solid #d8d0c0;padding:3px 0 3px 12px;margin-top:5px;font-size:14px;line-height:1.8;color:#2c2a26">このテストは<span style="background:linear-gradient(transparent 60%,#ffca5c 60%);padding:0 2px;font-weight:600">前から不安定</span>です。実装の問題ではないと思います。</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;flex-direction:row-reverse">
+            <div style="width:40px;height:40px;background:repeating-linear-gradient(45deg,#f2ddd0,#f2ddd0 4px,#f9ebe1 4px,#f9ebe1 8px);border:1px solid #c85e34;flex:none;display:flex;align-items:center;justify-content:center;font:8px 'IBM Plex Mono';color:#c85e34">自分</div>
+            <div style="flex:1;text-align:right">
+              <div style="font-size:13px;color:#c85e34;font-weight:600">あなた</div>
+              <div style="border-right:2px solid #ec7a4f;padding:3px 12px 3px 0;margin-top:5px;font-size:14px;line-height:1.8;color:#2c2a26">失敗条件が legacy_plan=true に揃っています。特定条件の実バグでは？</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- footer / dock -->
+        <div style="display:flex;align-items:center;gap:0;border-top:1px solid #1b2735;margin-top:8px">
+          <div style="display:flex">
+            <span style="width:46px;height:46px;border-right:1px solid #d8d0c0;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8a8377">CI</span>
+            <span style="width:46px;height:46px;border-right:1px solid #d8d0c0;background:#eaf1fd;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#2f68e0;box-shadow:inset 0 -3px 0 #2f68e0">Mail</span>
+            <span style="width:46px;height:46px;border-right:1px solid #d8d0c0;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8a8377">RB</span>
+          </div>
+          <button style="margin-left:auto;align-self:stretch;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;padding:0 22px;border:none;border-left:1px solid #1b2735;background:#ec7a4f;color:#fff;letter-spacing:.04em">▸ 会議を開始</button>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:520px">脱AI点：角丸ゼロ／ドロップ影なし・罫線で仕切る／インデックス番号(01)とモノ空ペースのシステムラベルを動機に／ハイライトは下線マーカー風／ドックは仕切り罫線でツールバー化。</div>
+    </div>
+
+    <!-- 4b Outline + hard shadow -->
+    <div class="dv-opt" id="4b">
+      <div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a>アウトライン + ハード影 — ゲームらしい実体感、鳥ADVと相性◎</div>
+      <div style="width:520px;background:#f4f7fc;border:2px solid #1b2735;border-radius:14px;box-shadow:6px 6px 0 #1b2735;overflow:hidden;font-family:'IBM Plex Sans JP',sans-serif">
+        <div style="padding:18px 22px;border-bottom:2px solid #1b2735;background:#fff;display:flex;align-items:center;gap:12px">
+          <div style="flex:1">
+            <div style="font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#8a8377">STAGE 01 / GO — NO-GO</div>
+            <div style="font:700 24px/1.2 'Zen Maru Gothic',sans-serif;color:#1b2735;margin-top:3px">決済v2 リリース判定会議</div>
+          </div>
+          <span style="font:700 11px 'IBM Plex Mono',monospace;color:#fff;background:#ec7a4f;border:2px solid #1b2735;border-radius:8px;padding:6px 10px;letter-spacing:.04em;box-shadow:2px 2px 0 #1b2735">RELEASE EVE</span>
+        </div>
+
+        <div style="padding:18px 22px">
+          <div style="font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#8a97a8;margin-bottom:12px">会議バトル / ROUND 02</div>
+
+          <div style="display:flex;gap:11px;margin-bottom:13px">
+            <div style="width:40px;height:40px;border-radius:50%;background:repeating-linear-gradient(45deg,#dfe4ec,#dfe4ec 4px,#eef1f6 4px,#eef1f6 8px);border:2px solid #1b2735;flex:none;display:flex;align-items:center;justify-content:center;font:8px 'IBM Plex Mono';color:#5a6576;text-align:center;line-height:1.1">ハヤ<br>ブサ</div>
+            <div style="background:#fff;border:2px solid #1b2735;border-radius:12px;border-top-left-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#1b2735;box-shadow:3px 3px 0 rgba(27,39,53,.13)">このテストは<span style="background:#ffca5c;border:1.5px solid #1b2735;border-radius:5px;padding:0 5px">前から不安定</span>です。</div>
+          </div>
+
+          <div style="display:flex;gap:11px;flex-direction:row-reverse">
+            <div style="width:40px;height:40px;border-radius:50%;background:repeating-linear-gradient(45deg,#f2ddd0,#f2ddd0 4px,#f9ebe1 4px,#f9ebe1 8px);border:2px solid #1b2735;flex:none;display:flex;align-items:center;justify-content:center;font:8px 'IBM Plex Mono';color:#c85e34">自分</div>
+            <div style="background:#ec7a4f;border:2px solid #1b2735;border-radius:12px;border-top-right-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#fff;max-width:80%;box-shadow:3px 3px 0 rgba(27,39,53,.2)">失敗条件が legacy_plan=true に揃っています。特定条件の実バグでは？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:9px;padding:15px 22px;border-top:2px solid #1b2735;background:#fff">
+          <span style="width:40px;height:40px;border-radius:10px;background:#fff;border:2px solid #1b2735;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#5a6576">CI</span>
+          <span style="width:44px;height:44px;border-radius:10px;background:#eaf1fd;border:2px solid #2f68e0;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#2f68e0;box-shadow:2px 2px 0 #2f68e0">Mail</span>
+          <button style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;padding:10px 20px;border:2px solid #1b2735;border-radius:11px;background:#ec7a4f;color:#fff;box-shadow:3px 3px 0 #1b2735;letter-spacing:.03em">▸ 会議を開始</button>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:520px">脱AI点：ふわ影→ハードな2px黒アウトライン＋オフセット影で実体感／ハイライトも縁取りで"シールっぽく"／バッジをスタンプ化。ゲーム/絵本寄りの体温。</div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">次の一手の例：「<a class="dv-oid" href="#4a">4a</a> で確定、探索画面を作り込んで」 · 「<a class="dv-oid" href="#4b">4b</a>だけど影はもっと控えめに」 · 「<a class="dv-oid" href="#4a">4a</a>の罫線 + <a class="dv-oid" href="#4b">4b</a>のスタンプを混ぜたい」 · 「もっと日本語エディトリアル(縦罫・級数感)を強く」</p>
+</section>
+
+<section class="dv-turn" id="t3">
+  <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">青×白ベース + 暖色の差し色 — 温かさは色で効かせる</span></div>
+  <p class="dv-note">ベースは青×白のクリーンなSaaSトーン（背景は白〜ごく淡い青）。温かさは①丸ゴシック見出し②暖色の差し色（コーラル／アンバー）で。差し色の置き方を2パターン：<a class="dv-oid" href="#3a">3a</a>=CTAは青のまま暖色はハイライト/バッジに、<a class="dv-oid" href="#3b">3b</a>=CTA自体を暖色に。</p>
+
+  <div class="dv-opts">
+
+    <!-- 3a CTA青 -->
+    <div class="dv-opt" id="3a">
+      <div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>差し色は"効かせどころ"だけ（CTAは青）</div>
+      <div style="width:500px;background:#ffffff;border:1px solid #e2e8f1;border-radius:16px;box-shadow:0 6px 22px rgba(30,50,90,.10);overflow:hidden;font-family:'IBM Plex Sans JP',sans-serif">
+        <div style="padding:24px 26px 18px;background:linear-gradient(#ffffff,#f4f7fc);border-bottom:1px solid #eef2f9">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:9px;height:26px;border-radius:3px;background:#ec7a4f"></span>
+            <div style="font:700 24px/1.2 'Zen Maru Gothic',sans-serif;color:#1b2735">決済v2 リリース判定会議</div>
+          </div>
+          <div style="font-size:13px;color:#7b8798;margin-top:6px">青×白の清潔感。暖色は縦バー・ハイライト・バッジに"点"で効かせる。</div>
+        </div>
+
+        <div style="padding:16px 26px;display:flex;gap:15px;border-bottom:1px solid #eef2f9">
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffffff;border-color:#dbe3ee"></span><span class="swlab">白</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#f4f7fc;border-color:#dbe3ee"></span><span class="swlab">淡青</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#1b2735"></span><span class="swlab">#1B2735</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#2f68e0"></span><span class="swlab">#2F68E0</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ec7a4f"></span><span class="swlab">差し色</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffca5c"></span><span class="swlab">HL</span></div>
+        </div>
+
+        <div style="padding:15px 26px 8px;font-size:12px;color:#9aa4b2">見出し Zen Maru Gothic ／ 本文 IBM Plex Sans JP ／ ログ IBM Plex Mono</div>
+        <div style="padding:0 26px 16px">
+          <div style="font:700 16px 'Zen Maru Gothic',sans-serif;color:#1b2735">前提が固まる前に、止める。</div>
+          <div style="font-size:13px;color:#5a6576;line-height:1.7">資料を読んで、会議の流れを変える推理ADV。</div>
+        </div>
+
+        <div style="margin:6px 26px;padding:13px;background:#f7f9fc;border:1px solid #eef2f9;border-radius:12px">
+          <div style="font-size:10px;color:#aab3c0;margin-bottom:9px;letter-spacing:.04em">Slackアプリ（Prologue）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(45deg,#dde6f2,#dde6f2 4px,#eef2f8 4px,#eef2f8 8px);border:1px solid #cfd9e6;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8;text-align:center">インコ</div>
+            <div><span style="font-weight:600;color:#1b2735;font-size:13px">佐伯</span> <span style="font-size:10px;color:#fff;background:#ec7a4f;border-radius:4px;padding:1px 5px">PM</span> <span style="font-size:11px;color:#aab3c0">21:38</span><div style="font-size:13px;color:#3a4454;line-height:1.6">CI赤いですが前回も似た感じでGo見てます。今日中に最終確認だけ🙏</div></div>
+          </div>
+        </div>
+
+        <div style="margin:6px 26px 16px;padding:13px;background:#f7f9fc;border:1px solid #eef2f9;border-radius:12px">
+          <div style="font-size:10px;color:#aab3c0;margin-bottom:9px;letter-spacing:.04em">会議バトル（ADVチャット）</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7e0ee,#d7e0ee 4px,#e8eef7 4px,#e8eef7 8px);border:1.6px solid #2f68e0;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#2f68e0">ハヤブサ</div>
+            <div style="background:#fff;border:1.5px solid #e2e8f1;border-radius:12px;border-top-left-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#1b2735">このテストは<span style="background:#ffca5c;border-radius:4px;padding:1px 5px;border-bottom:2px solid #e79b1f">前から不安定</span>です。</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-direction:row-reverse">
+            <div style="width:36px;height:36px;border-radius:50%;background:repeating-linear-gradient(45deg,#f3ddd0,#f3ddd0 4px,#f9ebe1 4px,#f9ebe1 8px);border:1.6px solid #ec7a4f;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#c85e34">自分</div>
+            <div style="background:#eaf1fd;border:1.5px solid #cfe0fb;border-radius:12px;border-top-right-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#22405f;max-width:80%">失敗条件が legacy_plan=true に揃っています。特定条件の実バグでは？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:15px 26px;border-top:1px solid #eef2f9;background:#f4f7fc">
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #dbe3ee;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8">CI</span>
+          <span style="width:44px;height:44px;border-radius:12px;background:#eaf1fd;border:2px solid #2f68e0;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#2f68e0">Mail</span>
+          <span style="font-size:12px;padding:6px 11px;border-radius:16px;background:#fff;border:1.5px solid #ec7a4f;color:#c85e34">前から不安定</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;font-weight:600;padding:10px 18px;border:none;border-radius:11px;background:#2f68e0;color:#fff;box-shadow:0 3px 0 #1f4db0">▸ 会議を開始</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3b CTA暖色 -->
+    <div class="dv-opt" id="3b">
+      <div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>キーアクションを暖色に（CTA=コーラル、青は構造/選択に）</div>
+      <div style="width:500px;background:#ffffff;border:1px solid #e2e8f1;border-radius:16px;box-shadow:0 6px 22px rgba(30,50,90,.10);overflow:hidden;font-family:'IBM Plex Sans JP',sans-serif">
+        <div style="padding:24px 26px 18px;background:linear-gradient(#fffdfb,#f4f7fc);border-bottom:1px solid #eef2f9">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:9px;height:26px;border-radius:3px;background:#2f68e0"></span>
+            <div style="font:700 24px/1.2 'Zen Maru Gothic',sans-serif;color:#1b2735">決済v2 リリース判定会議</div>
+          </div>
+          <div style="font-size:13px;color:#7b8798;margin-top:6px">操作の"手が触れる所"（CTA・自分の発言）を暖色に。全体は青×白のまま。</div>
+        </div>
+
+        <div style="padding:16px 26px;display:flex;gap:15px;border-bottom:1px solid #eef2f9">
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffffff;border-color:#dbe3ee"></span><span class="swlab">白</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#f4f7fc;border-color:#dbe3ee"></span><span class="swlab">淡青</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#1b2735"></span><span class="swlab">#1B2735</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#2f68e0"></span><span class="swlab">#2F68E0</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ec7a4f"></span><span class="swlab">CTA</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffca5c"></span><span class="swlab">HL</span></div>
+        </div>
+
+        <div style="padding:15px 26px 8px;font-size:12px;color:#9aa4b2">見出し Zen Maru Gothic ／ 本文 IBM Plex Sans JP ／ ログ IBM Plex Mono</div>
+        <div style="padding:0 26px 16px">
+          <div style="font:700 16px 'Zen Maru Gothic',sans-serif;color:#1b2735">前提が固まる前に、止める。</div>
+          <div style="font-size:13px;color:#5a6576;line-height:1.7">資料を読んで、会議の流れを変える推理ADV。</div>
+        </div>
+
+        <div style="margin:6px 26px;padding:13px;background:#f7f9fc;border:1px solid #eef2f9;border-radius:12px">
+          <div style="font-size:10px;color:#aab3c0;margin-bottom:9px;letter-spacing:.04em">Slackアプリ（Prologue）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(45deg,#dde6f2,#dde6f2 4px,#eef2f8 4px,#eef2f8 8px);border:1px solid #cfd9e6;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8;text-align:center">インコ</div>
+            <div><span style="font-weight:600;color:#1b2735;font-size:13px">佐伯</span> <span style="font-size:10px;color:#2f68e0;background:#eaf1fd;border-radius:4px;padding:1px 5px">PM</span> <span style="font-size:11px;color:#aab3c0">21:38</span><div style="font-size:13px;color:#3a4454;line-height:1.6">CI赤いですが前回も似た感じでGo見てます。今日中に最終確認だけ🙏</div></div>
+          </div>
+        </div>
+
+        <div style="margin:6px 26px 16px;padding:13px;background:#f7f9fc;border:1px solid #eef2f9;border-radius:12px">
+          <div style="font-size:10px;color:#aab3c0;margin-bottom:9px;letter-spacing:.04em">会議バトル（ADVチャット）</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7e0ee,#d7e0ee 4px,#e8eef7 4px,#e8eef7 8px);border:1.6px solid #2f68e0;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#2f68e0">ハヤブサ</div>
+            <div style="background:#fff;border:1.5px solid #e2e8f1;border-radius:12px;border-top-left-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#1b2735">このテストは<span style="background:#ffca5c;border-radius:4px;padding:1px 5px;border-bottom:2px solid #e79b1f">前から不安定</span>です。</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-direction:row-reverse">
+            <div style="width:36px;height:36px;border-radius:50%;background:repeating-linear-gradient(45deg,#f3ddd0,#f3ddd0 4px,#f9ebe1 4px,#f9ebe1 8px);border:1.6px solid #ec7a4f;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#c85e34">自分</div>
+            <div style="background:#fdf0e9;border:1.5px solid #f6d5c4;border-radius:12px;border-top-right-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#8a4022;max-width:80%">失敗条件が legacy_plan=true に揃っています。特定条件の実バグでは？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:15px 26px;border-top:1px solid #eef2f9;background:#f4f7fc">
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #dbe3ee;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8">CI</span>
+          <span style="width:44px;height:44px;border-radius:12px;background:#eaf1fd;border:2px solid #2f68e0;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#2f68e0">Mail</span>
+          <span style="font-size:12px;padding:6px 11px;border-radius:16px;background:#fff;border:1.5px solid #2f68e0;color:#2f68e0">前から不安定</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;font-weight:700;padding:10px 18px;border:none;border-radius:11px;background:#ec7a4f;color:#fff;box-shadow:0 3px 0 #c05833">▸ 会議を開始</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">次の一手の例：「<a class="dv-oid" href="#3b">3b</a> で確定、探索画面を作り込んで」 · 「差し色はコーラルよりアンバー(黄橙)で」 · 「差し色をもっと少なく／もっと効かせて」 · 「自分の発言は青のままがいい」</p>
+</section>
+
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">統合案 — <a class="dv-oid" href="#1b">1b</a>クリーンSaaS を土台に、<a class="dv-oid" href="#1a">1a</a>の温かさ + 丸ゴシック見出し</span></div>
+  <p class="dv-note">背景を紙寄りの暖色ライトに、見出しは Zen Maru Gothic（丸ゴシック）で親しみを。構造・実務感・青アクセントは 1b を継承。本文は IBM Plex Sans JP、ログは IBM Plex Mono。</p>
+
+  <div class="dv-opts">
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Warm SaaS（確定候補）</div>
+      <div style="width:520px;background:#f5f1e9;border:1px solid #e6ded0;border-radius:16px;box-shadow:0 6px 22px rgba(70,55,30,.10);overflow:hidden;font-family:'IBM Plex Sans JP',sans-serif">
+        <div style="padding:24px 26px 18px;background:linear-gradient(#fbf8f2,#f3ede1);border-bottom:1px solid #ece3d3">
+          <div style="font:700 24px/1.3 'Zen Maru Gothic',sans-serif;color:#2c2a26">決済v2 リリース判定会議</div>
+          <div style="font-size:13px;color:#8a8377;margin-top:5px">紙の温かさ × 実務ツールの清潔感。見出しは丸ゴシックで柔らかく。</div>
+        </div>
+
+        <!-- palette -->
+        <div style="padding:16px 26px;display:flex;gap:15px;border-bottom:1px solid #ece3d3">
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#f5f1e9;border-color:#ddd3c2"></span><span class="swlab">BG</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffffff;border-color:#e6ded0"></span><span class="swlab">面</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#2c2a26"></span><span class="swlab">#2C2A26</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#3b5bdb"></span><span class="swlab">#3B5BDB</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#2ba88c"></span><span class="swlab">#2BA88C</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffcf5c"></span><span class="swlab">HL</span></div>
+        </div>
+
+        <!-- type specimen -->
+        <div style="padding:15px 26px 8px;font-size:12px;color:#a89c88">見出し Zen Maru Gothic ／ 本文 IBM Plex Sans JP ／ ログ IBM Plex Mono</div>
+        <div style="padding:0 26px 16px">
+          <div style="font:700 16px 'Zen Maru Gothic',sans-serif;color:#2c2a26">前提が固まる前に、止める。</div>
+          <div style="font-size:13px;color:#6b6559;line-height:1.7">資料を読んで、会議の流れを変える推理ADV。</div>
+          <div style="font:500 12px 'IBM Plex Mono',monospace;color:#8a8377;margin-top:5px;background:#f0ece3;border:1px solid #e6ded0;border-radius:6px;padding:5px 9px;display:inline-block">legacy_plan=true / tax_category=null</div>
+        </div>
+
+        <!-- Slack -->
+        <div style="margin:6px 26px;padding:13px;background:#fff;border:1px solid #ece3d3;border-radius:12px">
+          <div style="font-size:10px;color:#b3a893;margin-bottom:9px;letter-spacing:.04em">Slackアプリ（Prologue）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(45deg,#eae3d3,#eae3d3 4px,#f4efe4 4px,#f4efe4 8px);border:1px solid #ddd3c2;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#a89c88;text-align:center">インコ</div>
+            <div><span style="font-weight:600;color:#2c2a26;font-size:13px">佐伯</span> <span style="font-size:11px;color:#b3a893">PM 21:38</span><div style="font-size:13px;color:#4a4438;line-height:1.6">CI赤いですが前回も似た感じでGo見てます。今日中に最終確認だけ🙏</div></div>
+          </div>
+        </div>
+
+        <!-- 会議吹き出し -->
+        <div style="margin:6px 26px 16px;padding:13px;background:#fff;border:1px solid #ece3d3;border-radius:12px">
+          <div style="font-size:10px;color:#b3a893;margin-bottom:9px;letter-spacing:.04em">会議バトル（ADVチャット）</div>
+          <div style="display:flex;gap:10px;margin-bottom:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7e0ee,#d7e0ee 4px,#e8eef7 4px,#e8eef7 8px);border:1.6px solid #3b5bdb;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#3b5bdb">ハヤブサ</div>
+            <div style="background:#faf7f0;border:1.5px solid #ece0cd;border-radius:12px;border-top-left-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#2c2a26">このテストは<span style="background:#ffcf5c;border-radius:4px;padding:1px 5px;border-bottom:2px solid #d99b00">前から不安定</span>です。実装の問題ではないと思います。</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-direction:row-reverse">
+            <div style="width:36px;height:36px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7ddd2,#d7ddd2 4px,#e8ede2 4px,#e8ede2 8px);border:1.6px solid #2ba88c;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#1f8a72">自分</div>
+            <div style="background:#eef4f2;border:1.5px solid #cfe6de;border-radius:12px;border-top-right-radius:3px;padding:9px 13px;font-size:14px;line-height:1.75;color:#1f5a4d;max-width:80%">失敗条件が legacy_plan=true に揃っています。不安定なテストというより、特定条件の実バグでは？</div>
+          </div>
+        </div>
+
+        <!-- dock + buttons -->
+        <div style="display:flex;align-items:center;gap:10px;padding:15px 26px;border-top:1px solid #ece3d3;background:#f0ece3">
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #ddd3c2;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#a89c88">CI</span>
+          <span style="width:44px;height:44px;border-radius:12px;background:#eef2fb;border:2px solid #3b5bdb;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#3b5bdb">Mail</span>
+          <span style="font-size:12px;padding:6px 11px;border-radius:16px;background:#fff;border:1.5px solid #2ba88c;color:#1f8a72">前から不安定</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;font-weight:600;padding:10px 18px;border:none;border-radius:11px;background:#3b5bdb;color:#fff;box-shadow:0 3px 0 #2a44ad">▸ 会議を開始</button>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#2a78d6;max-width:520px">この方向で確定なら、探索画面(3a)をこのトーンで作り込みます。アクセント青の濃さ・第2色(teal)の使いどころは調整可。</div>
+    </div>
+  </div>
+
+  <p class="dv-next">次の一手の例：「これでOK、探索画面を作り込んで」 · 「青をもう少し落ち着かせて」 · 「見出しの丸みをもう少し控えめに」 · 「ハイライト(黄)を別色に」</p>
+</section>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">デザイン方向性 — カラー / フォント / コンセプト 3案</span></div>
+  <p class="dv-note">
+    前提（確定）：探索＝OSデスクトップ、会議＝ADVチャットで<b>別物として作る</b>／<b>静的デザインカンプ</b>（固定サイズ 1360×860 想定）／キャラは<b>鳥</b>（セキセイインコ・フクロウ・タカ等、可愛い〜かっこいい）で、アートは後で差し込むため今はアバター枠。<br>
+    キャラ配役の叩き台：佐伯(PM)=セキセイインコ / 黒瀬(Tech Lead)=ハヤブサ / 三村(QA)=フクロウ / 桐谷(Sales)=オカメインコ / 榊(CTO)=イヌワシ。<br>
+    下の3案は、同じUI断片（Slackメッセージ・会議の吹き出し・ドック・ボタン・ハイライト）を各トーンで並べています。
+  </p>
+
+  <div class="dv-opts">
+
+    <!-- ============ 1a WARM ============ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>紙とインコ — 温かい・可愛い寄り・親しみやすい</div>
+      <div style="width:480px;background:#faf6ee;border:1px solid #e4dccb;border-radius:16px;box-shadow:0 6px 22px rgba(80,60,30,.10);overflow:hidden;font-family:'Zen Kaku Gothic New',sans-serif">
+        <div style="padding:22px 24px 18px;background:linear-gradient(#fbf8f1,#f6efe1)">
+          <div style="font:700 22px/1.3 'Zen Maru Gothic',sans-serif;color:#3a3227">決済v2 リリース判定会議</div>
+          <div style="font-size:13px;color:#8a7f6d;margin-top:4px">やわらかい紙のトーン + 丸ゴシック見出し。鳥キャラの可愛さと相性が良い。</div>
+        </div>
+
+        <div style="padding:16px 24px;display:flex;gap:14px;border-bottom:1px solid #eee2cd">
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#faf6ee"></span><span class="swlab">#FAF6EE</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#3a3227"></span><span class="swlab">#3A3227</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#df7a5b"></span><span class="swlab">#DF7A5B</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#4c9a8a"></span><span class="swlab">#4C9A8A</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#fbd38d"></span><span class="swlab">HL</span></div>
+        </div>
+
+        <div style="padding:14px 24px 6px;font-size:12px;color:#a89a83">見出し Zen Maru Gothic ／ 本文 Zen Kaku Gothic New ／ ログ JetBrains Mono</div>
+        <div style="padding:0 24px 14px">
+          <div style="font:700 15px 'Zen Maru Gothic',sans-serif;color:#3a3227">前提が固まる前に、止める。</div>
+          <div style="font-size:13px;color:#6b6152;line-height:1.7">資料を読んで、会議の流れを変える推理ADV。</div>
+          <div style="font:500 12px 'JetBrains Mono',monospace;color:#8a7f6d;margin-top:4px">legacy_plan=true / tax_category=null</div>
+        </div>
+
+        <!-- Slackメッセージ -->
+        <div style="margin:6px 24px;padding:12px;background:#fff;border:1px solid #eee2cd;border-radius:12px">
+          <div style="font-size:10px;color:#b7a98f;margin-bottom:8px">Slackアプリ（Prologue）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(45deg,#f0e6d0,#f0e6d0 4px,#f7f0e2 4px,#f7f0e2 8px);border:1px solid #e0d3b8;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#a89574;text-align:center">インコ</div>
+            <div><span style="font-weight:700;color:#3a3227;font-size:13px">佐伯</span> <span style="font-size:11px;color:#b7a98f">PM 21:38</span><div style="font-size:13px;color:#4a4236;line-height:1.6">CI赤いですが前回も似た感じでGo見てます。今日中に最終確認だけ🙏</div></div>
+          </div>
+        </div>
+
+        <!-- 会議の吹き出し -->
+        <div style="margin:6px 24px 14px;padding:12px;background:#fff;border:1px solid #eee2cd;border-radius:12px">
+          <div style="font-size:10px;color:#b7a98f;margin-bottom:8px">会議バトル（ADVチャット）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:50%;background:repeating-linear-gradient(45deg,#e2ded3,#e2ded3 4px,#efece2 4px,#efece2 8px);border:1.6px solid #df7a5b;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#c06a4c">ハヤブサ</div>
+            <div style="background:#fff8f0;border:1.5px solid #f0d9c8;border-radius:12px;border-top-left-radius:3px;padding:9px 12px;font-size:14px;line-height:1.75;color:#3a3227">このテストは<span style="background:#fbd38d;border-radius:4px;padding:1px 5px;border-bottom:2px solid #df7a5b">前から不安定</span>です。</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 24px;border-top:1px solid #eee2cd;background:#f6efe1">
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #e0d3b8;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#a89574">CI</span>
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #e0d3b8;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#a89574">Mail</span>
+          <span style="font-size:12px;padding:6px 11px;border-radius:16px;background:#fff;border:1.5px solid #4c9a8a;color:#3a7d6f">前から不安定</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;font-weight:700;padding:10px 18px;border:none;border-radius:11px;background:#df7a5b;color:#fff;box-shadow:0 3px 0 #b85a3f">▸ 会議を開始</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b COOL SAAS ============ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>クリーンSaaS — 明るい・実務的・Slack/Jira感、鳥はスッキリ寄り</div>
+      <div style="width:480px;background:#f4f6f9;border:1px solid #dde3ec;border-radius:16px;box-shadow:0 6px 22px rgba(30,50,80,.10);overflow:hidden;font-family:'IBM Plex Sans JP',sans-serif">
+        <div style="padding:22px 24px 18px;background:#fff;border-bottom:1px solid #e6ebf1">
+          <div style="font:700 22px/1.3 'IBM Plex Sans JP',sans-serif;color:#1c2430">決済v2 リリース判定会議</div>
+          <div style="font-size:13px;color:#6b7688;margin-top:4px">実務ツールの清潔感。CI/PR/Jiraの"本物っぽさ"が出る。</div>
+        </div>
+
+        <div style="padding:16px 24px;display:flex;gap:14px;border-bottom:1px solid #e6ebf1">
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#f4f6f9"></span><span class="swlab">#F4F6F9</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#1c2430"></span><span class="swlab">#1C2430</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#3b5bdb"></span><span class="swlab">#3B5BDB</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#2ba88c"></span><span class="swlab">#2BA88C</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#ffcf5c"></span><span class="swlab">HL</span></div>
+        </div>
+
+        <div style="padding:14px 24px 6px;font-size:12px;color:#9aa4b2">見出し・本文 IBM Plex Sans JP ／ ログ IBM Plex Mono</div>
+        <div style="padding:0 24px 14px">
+          <div style="font:600 15px 'IBM Plex Sans JP',sans-serif;color:#1c2430">前提が固まる前に、止める。</div>
+          <div style="font-size:13px;color:#5a6576;line-height:1.7">資料を読んで、会議の流れを変える推理ADV。</div>
+          <div style="font:500 12px 'IBM Plex Mono',monospace;color:#6b7688;margin-top:4px">legacy_plan=true / tax_category=null</div>
+        </div>
+
+        <div style="margin:6px 24px;padding:12px;background:#fff;border:1px solid #e6ebf1;border-radius:12px">
+          <div style="font-size:10px;color:#aab3c0;margin-bottom:8px">Slackアプリ（Prologue）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(45deg,#dde6f2,#dde6f2 4px,#eef2f8 4px,#eef2f8 8px);border:1px solid #cfd9e6;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8;text-align:center">インコ</div>
+            <div><span style="font-weight:600;color:#1c2430;font-size:13px">佐伯</span> <span style="font-size:11px;color:#aab3c0">PM 21:38</span><div style="font-size:13px;color:#3a4454;line-height:1.6">CI赤いですが前回も似た感じでGo見てます。今日中に最終確認だけ🙏</div></div>
+          </div>
+        </div>
+
+        <div style="margin:6px 24px 14px;padding:12px;background:#fff;border:1px solid #e6ebf1;border-radius:12px">
+          <div style="font-size:10px;color:#aab3c0;margin-bottom:8px">会議バトル（ADVチャット）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:50%;background:repeating-linear-gradient(45deg,#d7e0ee,#d7e0ee 4px,#e8eef7 4px,#e8eef7 8px);border:1.6px solid #3b5bdb;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#3b5bdb">ハヤブサ</div>
+            <div style="background:#f7f9fc;border:1.5px solid #dbe3ef;border-radius:12px;border-top-left-radius:3px;padding:9px 12px;font-size:14px;line-height:1.75;color:#1c2430">このテストは<span style="background:#ffcf5c;border-radius:4px;padding:1px 5px;border-bottom:2px solid #d99b00">前から不安定</span>です。</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 24px;border-top:1px solid #e6ebf1;background:#eef2f7">
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #cfd9e6;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8">CI</span>
+          <span style="width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid #cfd9e6;display:flex;align-items:center;justify-content:center;font:9px 'IBM Plex Mono';color:#8b97a8">Mail</span>
+          <span style="font-size:12px;padding:6px 11px;border-radius:16px;background:#fff;border:1.5px solid #2ba88c;color:#1f8a72">前から不安定</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;font-weight:600;padding:10px 18px;border:none;border-radius:11px;background:#3b5bdb;color:#fff;box-shadow:0 3px 0 #2a44ad">▸ 会議を開始</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c DARK ============ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>移行前夜（ダーク）— 緊張感・IDE/深夜のオフィス、鳥はかっこいい寄り</div>
+      <div style="width:480px;background:#14181f;border:1px solid #2a323d;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);overflow:hidden;font-family:'Zen Kaku Gothic New',sans-serif">
+        <div style="padding:22px 24px 18px;background:linear-gradient(#1a1f28,#14181f)">
+          <div style="font:900 22px/1.3 'Zen Kaku Gothic New',sans-serif;color:#e6ebf2">決済v2 リリース判定会議</div>
+          <div style="font-size:13px;color:#8792a3;margin-top:4px">"移行前夜/炎上前夜"の緊張感。ログ・CIが主役。鳥はシャープに映える。</div>
+        </div>
+
+        <div style="padding:16px 24px;display:flex;gap:14px;border-bottom:1px solid #262e39">
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#14181f;border-color:#3a4252"></span><span class="swlab" style="color:#7a8593">#14181F</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#1d232d"></span><span class="swlab" style="color:#7a8593">#1D232D</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#35d0c0"></span><span class="swlab" style="color:#7a8593">#35D0C0</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#f2b34a"></span><span class="swlab" style="color:#7a8593">#F2B34A</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center"><span class="sw" style="background:#f2b34a"></span><span class="swlab" style="color:#7a8593">HL</span></div>
+        </div>
+
+        <div style="padding:14px 24px 6px;font-size:12px;color:#6b7686">見出し・本文 Zen Kaku Gothic New ／ ログ JetBrains Mono</div>
+        <div style="padding:0 24px 14px">
+          <div style="font:700 15px 'Zen Kaku Gothic New',sans-serif;color:#e6ebf2">前提が固まる前に、止める。</div>
+          <div style="font-size:13px;color:#9aa4b2;line-height:1.7">資料を読んで、会議の流れを変える推理ADV。</div>
+          <div style="font:500 12px 'JetBrains Mono',monospace;color:#35d0c0;margin-top:4px">legacy_plan=true / tax_category=null</div>
+        </div>
+
+        <div style="margin:6px 24px;padding:12px;background:#1d232d;border:1px solid #2a323d;border-radius:12px">
+          <div style="font-size:10px;color:#6b7686;margin-bottom:8px">Slackアプリ（Prologue）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:9px;background:repeating-linear-gradient(45deg,#2b3440,#2b3440 4px,#333e4c 4px,#333e4c 8px);border:1px solid #3a4552;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#8792a3;text-align:center">インコ</div>
+            <div><span style="font-weight:700;color:#e6ebf2;font-size:13px">佐伯</span> <span style="font-size:11px;color:#6b7686">PM 21:38</span><div style="font-size:13px;color:#c2cad6;line-height:1.6">CI赤いですが前回も似た感じでGo見てます。今日中に最終確認だけ🙏</div></div>
+          </div>
+        </div>
+
+        <div style="margin:6px 24px 14px;padding:12px;background:#1d232d;border:1px solid #2a323d;border-radius:12px">
+          <div style="font-size:10px;color:#6b7686;margin-bottom:8px">会議バトル（ADVチャット）</div>
+          <div style="display:flex;gap:10px">
+            <div style="width:34px;height:34px;border-radius:50%;background:repeating-linear-gradient(45deg,#243b3a,#243b3a 4px,#2b4746 4px,#2b4746 8px);border:1.6px solid #35d0c0;flex:none;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#35d0c0">ハヤブサ</div>
+            <div style="background:#222a35;border:1.5px solid #33404e;border-radius:12px;border-top-left-radius:3px;padding:9px 12px;font-size:14px;line-height:1.75;color:#e6ebf2">このテストは<span style="background:rgba(242,179,74,.18);border-radius:4px;padding:1px 5px;border-bottom:2px solid #f2b34a;color:#f2b34a">前から不安定</span>です。</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 24px;border-top:1px solid #262e39;background:#1a1f28">
+          <span style="width:38px;height:38px;border-radius:11px;background:#232b36;border:1px solid #333e4c;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#8792a3">CI</span>
+          <span style="width:38px;height:38px;border-radius:11px;background:#232b36;border:1px solid #333e4c;display:flex;align-items:center;justify-content:center;font:9px 'JetBrains Mono';color:#8792a3">Mail</span>
+          <span style="font-size:12px;padding:6px 11px;border-radius:16px;background:#232b36;border:1.5px solid #35d0c0;color:#35d0c0">前から不安定</span>
+          <button style="margin-left:auto;font-family:inherit;font-size:14px;font-weight:700;padding:10px 18px;border:none;border-radius:11px;background:#35d0c0;color:#0d1116;box-shadow:0 3px 0 #1f8a7e">▸ 会議を開始</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">次の一手の例：「<a class="dv-oid" href="#1c">1c</a> で行こう、探索画面を作り込んで」 · 「<a class="dv-oid" href="#1b">1b</a> のSaaS感 + <a class="dv-oid" href="#1c">1c</a> のダークを混ぜたい」 · 「アクセントは青じゃなく別の色で」 · 「見出しフォントだけ変えたい」</p>
+</section>
+</x-dc>
+</body>
+</html>

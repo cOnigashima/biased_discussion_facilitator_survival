@@ -1,0 +1,46 @@
+{
+  "package": "bias_meeting_game_handoff",
+  "created_for": "next_session_or_codex_handoff",
+  "created_at_epoch": 1782984817,
+  "language": "ja",
+  "status": "concept_and_prototype_spec",
+  "intent": [
+    "これまでの議論を網羅的に引き継ぐ",
+    "プロダクト化・プロトタイプ実装に進める",
+    "面白さや仮説は固定せず検証可能な形で残す"
+  ],
+  "recommended_start_files": [
+    "README.md",
+    "00_codex_handoff_prompt.md",
+    "01_product_brief.md",
+    "04_battle_system.md",
+    "09_stage1_go_no_go_spec.md",
+    "10_stage1_dialogue_and_choices.md",
+    "11_data_model.yaml",
+    "12_flowchart_nodes.yaml",
+    "14_product_validation.md",
+    "15_backlog.md"
+  ],
+  "files": [
+    "00_codex_handoff_prompt.md",
+    "01_product_brief.md",
+    "02_design_principles.md",
+    "03_game_structure.md",
+    "04_battle_system.md",
+    "05_exploration_system.md",
+    "06_meeting_patterns.md",
+    "07_bias_catalog.md",
+    "08_character_roles.md",
+    "09_stage1_go_no_go_spec.md",
+    "10_stage1_dialogue_and_choices.md",
+    "11_data_model.yaml",
+    "12_flowchart_nodes.yaml",
+    "13_implementation_notes.md",
+    "14_product_validation.md",
+    "15_backlog.md",
+    "16_content_style_guide.md",
+    "17_glossary.md",
+    "18_next_steps.md",
+    "README.md"
+  ]
+}

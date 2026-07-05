@@ -1,0 +1,289 @@
+# Detroit-style flowchart node draft.
+# Large structure is mostly fixed; state flags alter dialogue and available choices.
+
+stage:
+  id: go_no_go_payment_v2
+  title: "決済v2 Go/No-Go会議"
+
+flags:
+  evidence_found:
+    ci_legacy_failure: false
+    pr_tax_category_comment: false
+    staging_500_log: false
+    customer_email_scope: false
+    rollback_procedure: false
+    feature_flag_design: false
+    past_incident_report: false
+    cpu_spike_log: false
+  claims:
+    pm_same_as_last_time_pinned: false
+    techlead_flaky_pinned: false
+    sales_deadline_pinned: false
+    qa_stop_everything_pinned: false
+  resolved:
+    same_as_last_time: false
+    flaky_test: false
+    customer_scope: false
+    rollback_risk: false
+    split_release: false
+    go_no_go_rule: false
+  relationships:
+    pm_enemy: false
+    techlead_enemy: false
+    sales_ally: false
+    qa_ally: false
+  state:
+    heat: 1
+    clarity: 1
+    support: 1
+    time: 5
+    momentum: release
+
+nodes:
+  - id: prologue
+    type: story
+    text: "明日の決済v2リリース前夜。SlackでCI失敗を巡るやりとりが流れている。"
+    next: exploration_hub
+
+  - id: exploration_hub
+    type: exploration
+    documents:
+      - slack_release_check
+      - jira_bug_418
+      - pr_tax_category
+      - ci_checkout_v2_failure
+      - customer_email
+      - rollback_procedure
+      - feature_flag_design
+      - past_incident_report
+      - cpu_spike_log
+    next: battle_round_1_pm
+
+  - id: battle_round_1_pm
+    type: battle
+    speaker: pm_saeki
+    claim: claim_same_as_last_time
+    choices:
+      - id: r1_compare_with_ci
+        label: "CIログで前回との差分を比較質問する"
+        requires:
+          evidence_found.ci_legacy_failure: true
+        effects:
+          clarity: +2
+          support: +1
+          time: -1
+          resolved.same_as_last_time: true
+        next: battle_round_2_techlead
+      - id: r1_call_bias
+        label: "それは正常性バイアスです、と指摘する"
+        effects:
+          heat: +2
+          relationships.pm_enemy: true
+        next: battle_round_2_techlead
+      - id: r1_pin
+        label: "『前回と同じ』を議事録にピン留めする"
+        effects:
+          claims.pm_same_as_last_time_pinned: true
+          premise_lock.same_as_last_time: +1
+        next: battle_round_2_techlead
+      - id: r1_ignore
+        label: "放置する"
+        effects:
+          premise_lock.same_as_last_time: +2
+          momentum: release
+        next: battle_round_2_techlead
+
+  - id: battle_round_2_techlead
+    type: battle
+    speaker: techlead_kurose
+    claim: claim_flaky_test
+    choices:
+      - id: r2_condition_check
+        label: "CIログで失敗条件を確認する"
+        requires:
+          evidence_found.ci_legacy_failure: true
+        effects:
+          clarity: +2
+          support: +1
+          time: -1
+          resolved.flaky_test: true
+        next: battle_round_3_sales
+      - id: r2_face_saving
+        label: "設計全体ではなくlegacy条件だけ確認したい、と退路を作る"
+        requires:
+          evidence_found.ci_legacy_failure: true
+        effects:
+          clarity: +2
+          support: +1
+          heat: -1
+          resolved.flaky_test: true
+        next: battle_round_3_sales
+      - id: r2_pr_attack
+        label: "PRコメントを出して設計ミスだと指摘する"
+        requires:
+          evidence_found.pr_tax_category_comment: true
+        effects:
+          clarity: +2
+          heat: +2
+          relationships.techlead_enemy: true
+        next: battle_round_3_sales
+      - id: r2_combo_pm_pin
+        label: "PMのピン留め発言とCIログを組み合わせる"
+        requires:
+          flags.claims.pm_same_as_last_time_pinned: true
+          evidence_found.ci_legacy_failure: true
+        effects:
+          clarity: +3
+          support: +2
+          resolved.same_as_last_time: true
+          resolved.flaky_test: true
+          momentum: split_candidate
+        next: battle_round_3_sales
+      - id: r2_cpu_misuse
+        label: "CPUスパイクログを出す"
+        requires:
+          evidence_found.cpu_spike_log: true
+        effects:
+          clarity: -1
+          heat: +1
+          support: -1
+        next: battle_round_3_sales
+
+  - id: battle_round_3_sales
+    type: battle
+    speaker: sales_kiritani
+    claim: claim_customer_deadline
+    choices:
+      - id: r3_scope_email
+        label: "顧客メールで必要範囲を分解する"
+        requires:
+          evidence_found.customer_email_scope: true
+        effects:
+          clarity: +2
+          support: +1
+          relationships.sales_ally: true
+          resolved.customer_scope: true
+          momentum: split_candidate
+        next: battle_round_4_qa
+      - id: r3_blame_sales
+        label: "営業が勝手に約束したと責める"
+        effects:
+          heat: +2
+          support: -1
+          relationships.sales_ally: false
+        next: battle_round_4_qa
+      - id: r3_pin
+        label: "『今月中に出す』をピン留めする"
+        effects:
+          claims.sales_deadline_pinned: true
+        next: battle_round_4_qa
+      - id: r3_risk_push
+        label: "事故が起きたらもっと信用を失う、と押す"
+        effects:
+          clarity: +1
+          heat: +1
+        next: battle_round_4_qa
+
+  - id: battle_round_4_qa
+    type: battle
+    speaker: qa_mimura
+    claim: claim_stop_everything
+    choices:
+      - id: r4_empathize_split
+        label: "QAに共感し、危険部分と安全部分を分ける"
+        requires:
+          evidence_found.rollback_procedure: true
+          evidence_found.feature_flag_design: true
+        effects:
+          clarity: +3
+          support: +2
+          relationships.qa_ally: true
+          resolved.rollback_risk: true
+          resolved.split_release: true
+          momentum: split
+        next: battle_round_5_cto
+      - id: r4_call_overreaction
+        label: "過剰反応だと言う"
+        effects:
+          heat: +2
+          support: -1
+          relationships.qa_ally: false
+          momentum: conflict
+        next: battle_round_5_cto
+      - id: r4_agree_full_stop
+        label: "全面停止に乗る"
+        effects:
+          support: 0
+          momentum: stop
+        next: battle_round_5_cto
+      - id: r4_pin
+        label: "『全部止めるべき』をピン留めする"
+        effects:
+          claims.qa_stop_everything_pinned: true
+        next: battle_round_5_cto
+
+  - id: battle_round_5_cto
+    type: battle
+    speaker: cto_sakaki
+    claim: final_decision_request
+    choices:
+      - id: final_full_release
+        label: "全面リリース"
+        next: ending_bad_full_release
+      - id: final_full_delay
+        label: "全面延期"
+        next: ending_normal_full_delay
+      - id: final_split_release
+        label: "invoice exportのみリリース、migration延期"
+        requires:
+          resolved.customer_scope: true
+          resolved.rollback_risk: true
+          resolved.split_release: true
+        next: minute_revision
+      - id: final_split_with_rule
+        label: "分割リリース + Go/No-Go基準化"
+        requires:
+          resolved.customer_scope: true
+          resolved.rollback_risk: true
+          resolved.split_release: true
+          state.heat_lte: 3
+          state.support_gte: 4
+        effects:
+          resolved.go_no_go_rule: true
+        next: minute_revision
+
+  - id: minute_revision
+    type: minute_revision
+    draft:
+      - "CI失敗は既知のflaky testと判断。"
+      - "顧客都合により今月中のリリースが必要。"
+      - "QA懸念はあるが、影響範囲は限定的。"
+      - "予定通りGo。"
+    corrections:
+      - draft_phrase: "既知のflaky test"
+        evidence: ci_legacy_failure
+        sets: resolved.flaky_test
+      - draft_phrase: "今月中のリリースが必要"
+        evidence: customer_email_scope
+        sets: resolved.customer_scope
+      - draft_phrase: "影響範囲は限定的"
+        evidence: rollback_procedure
+        sets: resolved.rollback_risk
+      - draft_phrase: "予定通りGo"
+        evidence: feature_flag_design
+        sets: resolved.split_release
+    next_logic:
+      if:
+        resolved.go_no_go_rule: true
+      then: ending_great_split_with_rule
+      else: ending_good_split_release
+
+endings:
+  - id: ending_bad_full_release
+    title: "Bad: 強行リリース"
+  - id: ending_normal_full_delay
+    title: "Normal: 全面延期"
+  - id: ending_good_split_release
+    title: "Good: 分割リリース"
+  - id: ending_great_split_with_rule
+    title: "Great: 分割リリース + ルール化"
