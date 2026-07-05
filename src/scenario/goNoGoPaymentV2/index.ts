@@ -3,7 +3,7 @@ import { characters } from './characters';
 import { documents } from './documents';
 import { endings, finalDecisions } from './endings';
 import { evidenceCards } from './evidence';
-import { meetingRounds } from './rounds';
+import { meetingOpening, meetingRounds } from './rounds';
 
 export const goNoGoPaymentV2Stage = {
   id: 'go_no_go_payment_v2',
@@ -17,6 +17,7 @@ export const goNoGoPaymentV2Stage = {
   characters,
   documents,
   evidenceCards,
+  meetingOpening,
   meetingRounds,
   finalDecisions,
   endings,
@@ -28,5 +29,6 @@ export {
   endings,
   evidenceCards,
   finalDecisions,
+  meetingOpening,
   meetingRounds,
 };

@@ -26,7 +26,7 @@ export function createInitialGameState(stage: StageDefinition): GameState {
   }
 
   return {
-    phase: 'prologue',
+    phase: 'title',
     currentDocumentId: firstDocumentId,
     acquiredEvidence: [],
     explorationLocked: false,

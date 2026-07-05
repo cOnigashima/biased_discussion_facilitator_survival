@@ -37,4 +37,29 @@ describe('scenario validator', () => {
       evidenceId: 'cpu_spike_log',
     });
   });
+
+  it('keeps meeting dialogue attached to valid characters', () => {
+    const characterIds = new Set(goNoGoPaymentV2Stage.characters.map((character) => character.id));
+    const openingSpeakerIds = goNoGoPaymentV2Stage.meetingOpening.map((line) => line.speakerId);
+    const roundSpeakerIds = goNoGoPaymentV2Stage.meetingRounds.flatMap((round) => [
+      round.speakerId,
+      ...round.npcStatement.map((line) => line.speakerId),
+    ]);
+
+    expect(goNoGoPaymentV2Stage.meetingOpening.length).toBeGreaterThan(0);
+    [...openingSpeakerIds, ...roundSpeakerIds].forEach((speakerId) => {
+      expect(characterIds.has(speakerId)).toBe(true);
+    });
+  });
+
+  it('keeps selectable target phrases visible in their statement lines', () => {
+    goNoGoPaymentV2Stage.meetingRounds.forEach((round) => {
+      round.targetPhrases.forEach((target) => {
+        const statementLine = round.npcStatement.find((line) => line.id === target.statementLineId);
+
+        expect(statementLine).toBeDefined();
+        expect(statementLine?.text).toContain(target.phrase);
+      });
+    });
+  });
 });

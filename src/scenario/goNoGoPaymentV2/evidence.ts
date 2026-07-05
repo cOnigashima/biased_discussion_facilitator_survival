@@ -66,12 +66,12 @@ export const evidenceCards = [
   },
   {
     id: 'past_incident_report',
-    title: '過去障害報告',
-    shortTitle: '過去障害',
+    title: '過去Go/No-Go議事録',
+    shortTitle: '議事録',
     sourceDocumentId: 'past_incident_report',
     kind: 'support',
     factSummary:
-      '過去にstaging警告をflaky扱いし、本番で請求処理失敗が起きた。ただし原因は今回と同一ではない。',
+      '過去のGo/No-Go議事録では、staging警告をflaky扱いし、本番で請求処理失敗が起きた。ただし原因は今回と同一ではない。',
   },
   {
     id: 'cpu_spike_log',

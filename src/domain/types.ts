@@ -121,12 +121,19 @@ export type StageDefinition = {
   characters: CharacterDefinition[];
   documents: DocumentDefinition[];
   evidenceCards: EvidenceCardDefinition[];
+  meetingOpening: DialogueLine[];
   meetingRounds: MeetingRoundDefinition[];
   finalDecisions: FinalDecisionDefinition[];
   endings: EndingDefinition[];
 };
 
-export type GamePhase = 'prologue' | 'exploration' | 'meeting' | 'finalDecision' | 'result';
+export type GamePhase =
+  | 'title'
+  | 'prologue'
+  | 'exploration'
+  | 'meeting'
+  | 'finalDecision'
+  | 'result';
 
 export type GameFlags = {
   flakyResolved: boolean;
@@ -164,6 +171,23 @@ export type PlayerAction = {
   evidenceIds: EvidenceId[];
   deliveryId?: DeliveryId;
   outcome?: RuleOutcome;
+};
+
+export type RuleResolution = {
+  outcome: RuleOutcome;
+  flagPatch?: Partial<GameFlags>;
+  meetingBreakdownRiskDelta?: number;
+  playerLog: string;
+  npcLog: string;
+  unresolvedLog?: string;
+};
+
+export type ActionResolution = {
+  outcome: RuleOutcome;
+  flagPatch: Partial<GameFlags>;
+  meetingBreakdownRiskDelta: number;
+  logEntries: MeetingLogEntry[];
+  roundCompleted: boolean;
 };
 
 export type GameState = {

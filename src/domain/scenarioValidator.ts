@@ -34,8 +34,13 @@ export function validateStage(stage: StageDefinition): ScenarioValidationIssue[]
   const issues: ScenarioValidationIssue[] = [];
   const evidenceIds = new Set(stage.evidenceCards.map((card) => card.id));
   const documentIds = new Set(stage.documents.map((document) => document.id));
+  const characterIds = new Set(stage.characters.map((character) => character.id));
   const endingIds = new Set(stage.endings.map((ending) => ending.id));
   const clickableLines = collectClickableLines(stage);
+
+  findDuplicates(stage.characters.map((character) => character.id)).forEach((id) => {
+    issues.push(issue('duplicate_character_id', `Duplicate character id: ${id}`));
+  });
 
   findDuplicates(stage.documents.map((document) => document.id)).forEach((id) => {
     issues.push(issue('duplicate_document_id', `Duplicate document id: ${id}`));
@@ -77,6 +82,19 @@ export function validateStage(stage: StageDefinition): ScenarioValidationIssue[]
       issues.push(issue('pilack_evidence', 'Pilack must remain prologue-only and non-evidence.'));
     }
   }
+
+  stage.documents.forEach((document) => {
+    document.lines.forEach((line) => {
+      if (line.speakerId && !characterIds.has(line.speakerId)) {
+        issues.push(
+          issue(
+            'document_speaker_missing',
+            `Document line ${line.id} points to missing character ${line.speakerId}.`,
+          ),
+        );
+      }
+    });
+  });
 
   const piraHasBugLine = clickableLines.some(
     (line) => line.documentId === 'pira_bug_418' && line.evidenceId === 'jira_bug_418_repro',
@@ -134,8 +152,40 @@ export function validateStage(stage: StageDefinition): ScenarioValidationIssue[]
     }
   });
 
+  if (stage.meetingOpening.length === 0) {
+    issues.push(issue('meeting_opening_missing', 'Meeting opening dialogue must not be empty.'));
+  }
+
+  stage.meetingOpening.forEach((line) => {
+    if (!characterIds.has(line.speakerId)) {
+      issues.push(
+        issue(
+          'opening_speaker_missing',
+          `Opening line ${line.id} points to missing character ${line.speakerId}.`,
+        ),
+      );
+    }
+  });
+
   stage.meetingRounds.forEach((round) => {
     const statementLineIds = new Set(round.npcStatement.map((line) => line.id));
+
+    if (!characterIds.has(round.speakerId)) {
+      issues.push(
+        issue('round_speaker_missing', `Round ${round.id} points to missing character ${round.speakerId}.`),
+      );
+    }
+
+    round.npcStatement.forEach((line) => {
+      if (!characterIds.has(line.speakerId)) {
+        issues.push(
+          issue(
+            'round_statement_speaker_missing',
+            `Statement line ${line.id} points to missing character ${line.speakerId}.`,
+          ),
+        );
+      }
+    });
 
     round.targetPhrases.forEach((target) => {
       if (!statementLineIds.has(target.statementLineId)) {
@@ -143,6 +193,17 @@ export function validateStage(stage: StageDefinition): ScenarioValidationIssue[]
           issue(
             'target_statement_missing',
             `Target ${target.id} points to missing statement line ${target.statementLineId}.`,
+          ),
+        );
+        return;
+      }
+
+      const statementLine = round.npcStatement.find((line) => line.id === target.statementLineId);
+      if (statementLine && !statementLine.text.includes(target.phrase)) {
+        issues.push(
+          issue(
+            'target_phrase_text_missing',
+            `Target ${target.id} phrase "${target.phrase}" is not visible in ${target.statementLineId}.`,
           ),
         );
       }

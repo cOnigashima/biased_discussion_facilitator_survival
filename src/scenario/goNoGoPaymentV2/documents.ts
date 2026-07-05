@@ -273,27 +273,27 @@ export const documents = [
   {
     id: 'past_incident_report',
     kind: 'incident',
-    title: '過去障害報告 / staging warning ignored',
-    appLabel: '過去障害',
-    dockLabel: '過去',
+    title: '過去Go/No-Go議事録 / staging warning ignored',
+    appLabel: '議事録',
+    dockLabel: '議事録',
     appColorToken: '#c85e34',
     iconLabel: '◷',
     isPrologueOnly: false,
     lines: [
       {
         id: 'incident_heading',
-        text: 'Incident Report: staging warning ignored',
+        text: 'Go/No-Go議事録: staging warning ignored',
         style: 'heading',
       },
       {
         id: 'incident_flaky_staging_warning',
-        text: 'staging警告をflakyとして扱い、本番で一部顧客の請求処理が失敗した。ただし原因は今回と直接同一ではない。',
+        text: '前回議事録: staging警告をflakyとして扱い、本番で一部顧客の請求処理が失敗した。ただし原因は今回と直接同一ではない。',
         style: 'log_warn',
         evidenceId: 'past_incident_report',
       },
       {
         id: 'incident_action_item',
-        text: 'Action item: 同一条件で反復する警告は、リリース前に条件を分解して確認する。',
+        text: '議事録メモ: 同一条件で反復する警告は、リリース前に条件を分解して確認する。',
       },
     ],
   },
